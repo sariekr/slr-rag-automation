@@ -30,7 +30,7 @@ def main() -> None:
     args = ap.parse_args()
 
     print("=" * 60)
-    print("RAG-LLM SLR: Index builder (stages 1-3)")
+    print("SLR-RAG: Index builder (stages 1-3)")
     print("=" * 60)
 
     # 1. Corpus

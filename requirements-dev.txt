@@ -1,0 +1,13 @@
+# Test-only dependencies.
+#
+# The unit test suite exercises pure logic (citation reconciliation, span-grounding,
+# JSON parsing, statistical guards, diversity selection, screening decision mapping) and
+# needs only pytest plus the lightweight scikit-learn / scipy used by the metrics code,
+# not the full embedding / vector stack. The verification layer can therefore be verified
+# with a torch-free install:
+#
+#     pip install -r requirements-dev.txt && python -m pytest tests/ -q
+#
+pytest>=8
+scikit-learn==1.8.0
+scipy==1.17.1

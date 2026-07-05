@@ -132,8 +132,11 @@ tests/            unit tests (pytest)
 docs/             images used by this README
 ```
 
+Run the tests (torch-free: needs only pytest, scikit-learn, and scipy, no API key or network):
+
 ```bash
-.venv/bin/python -m pytest -q     # 73 tests
+.venv/bin/pip install -r requirements-dev.txt   # already installed by scripts/setup.sh
+.venv/bin/python -m pytest tests/ -q            # 73 tests
 ```
 
 ## Contributing

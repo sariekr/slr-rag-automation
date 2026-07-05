@@ -16,7 +16,7 @@ jobs:
       # The unit suite covers pure logic (citation reconciliation, source grounding,
       # extraction status, evaluation metrics) and needs only scikit-learn + scipy,
       # not the full embedding/vector stack, so this job stays fast.
-      - run: pip install scikit-learn scipy pytest
+      - run: pip install -r requirements-dev.txt
       - run: python -m pytest tests/ -q
 
   install-check:

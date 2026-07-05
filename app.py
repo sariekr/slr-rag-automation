@@ -1,5 +1,5 @@
 """
-Web Application + RESTful API for the RAG-LLM systematic literature review
+Web Application + RESTful API for the SLR-RAG systematic literature review
 automation system.
 
 Exposes the three pipeline tasks (screening / extraction / synthesis) over the
@@ -221,7 +221,7 @@ async def lifespan(app):
     yield
 
 
-app = FastAPI(title="RAG-LLM SLR Automation Web Interface", lifespan=lifespan)
+app = FastAPI(title="SLR-RAG Automation Web Interface", lifespan=lifespan)
 
 
 # ── Request models ───────────────────────────────────────────────────────────

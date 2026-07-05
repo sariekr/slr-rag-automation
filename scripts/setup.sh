@@ -12,6 +12,7 @@ echo "[2/4] Creating virtual environment (.venv)..."
 echo "[3/4] Installing dependencies (includes torch; first install may take a few minutes)..."
 ./.venv/bin/python -m pip install --upgrade pip
 ./.venv/bin/python -m pip install -r requirements.txt
+./.venv/bin/python -m pip install -r requirements-dev.txt   # pytest + test-only deps
 
 echo "[4/4] Configuration..."
 if [ ! -f .env ]; then
