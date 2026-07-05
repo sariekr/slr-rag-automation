@@ -1,0 +1,587 @@
+{
+  "sha256": "2b976dcf1092c47cc8ef7be4dc30f0073a86666af339469e998cca3a16411543",
+  "screening": [
+    {
+      "paper_id": "P001",
+      "title": "Uncertainty-Aware Hybrid Retrieval for Long-Document RAG",
+      "decision": "include"
+    },
+    {
+      "paper_id": "P002",
+      "title": "Multi-Field Hybrid Retrieval-Augmented Generation for Maritime Accident Root Cause Analysis",
+      "decision": "include"
+    },
+    {
+      "paper_id": "P003",
+      "title": "A Hybrid Retrieval and Reranking Framework for Evidence-Grounded Retrieval-Augmented Generation",
+      "decision": "include"
+    },
+    {
+      "paper_id": "P004",
+      "title": "Agentic Hybrid RAG for Evidence-Grounded Muon Collider Analysis",
+      "decision": "include"
+    },
+    {
+      "paper_id": "P005",
+      "title": "Efficient RAG with Intent-Aware Retrieval and Semantics-Preserving Chunking",
+      "decision": "include"
+    },
+    {
+      "paper_id": "P006",
+      "title": "Hierarchical Abstract Tree for Cross-Document Retrieval-Augmented Generation",
+      "decision": "include"
+    },
+    {
+      "paper_id": "P007",
+      "title": "Retrieval Augmented Generation Evaluation in the Era of Large Language Models: A Comprehensive Survey",
+      "decision": "exclude"
+    },
+    {
+      "paper_id": "P008",
+      "title": "Ragas: Automated Evaluation of Retrieval Augmented Generation",
+      "decision": "exclude"
+    },
+    {
+      "paper_id": "P009",
+      "title": "AR-RAG: Autoregressive Retrieval Augmentation for Image Generation",
+      "decision": "include"
+    },
+    {
+      "paper_id": "P010",
+      "title": "EVOR: Evolving Retrieval for Code Generation",
+      "decision": "include"
+    },
+    {
+      "paper_id": "P011",
+      "title": "Engineering the RAG Stack: A Comprehensive Review of the Architecture and Trust Frameworks for Retrieval-Augmented Generation Systems",
+      "decision": "exclude"
+    },
+    {
+      "paper_id": "P012",
+      "title": "Automated Literature Review Using NLP Techniques and LLM-Based Retrieval-Augmented Generation",
+      "decision": "include"
+    },
+    {
+      "paper_id": "P013",
+      "title": "MUST-RAG: MUSical Text Question Answering with Retrieval Augmented Generation",
+      "decision": "include"
+    },
+    {
+      "paper_id": "P014",
+      "title": "LURE-RAG: Lightweight Utility-driven Reranking for Efficient RAG",
+      "decision": "include"
+    },
+    {
+      "paper_id": "P015",
+      "title": "MultiHop-RAG: Benchmarking Retrieval-Augmented Generation for Multi-Hop Queries",
+      "decision": "exclude"
+    },
+    {
+      "paper_id": "P016",
+      "title": "Efficient Retrieval-Augmented Generation via Token Co-occurrence Graphs",
+      "decision": "include"
+    },
+    {
+      "paper_id": "P017",
+      "title": "RMIT-ADM+S at the MMU-RAG NeurIPS 2025 Competition",
+      "decision": "include"
+    },
+    {
+      "paper_id": "P018",
+      "title": "Simple Is Effective: The Roles of Graphs and Large Language Models in Knowledge-Graph-Based Retrieval-Augmented Generation",
+      "decision": "include"
+    },
+    {
+      "paper_id": "P019",
+      "title": "Dissecting Agentic RAG: A Component Ablation for Multi-Hop QA with a Local 7B Model",
+      "decision": "include"
+    },
+    {
+      "paper_id": "P020",
+      "title": "Covering the Unseen: Information Demand Coverage Optimization for Retrieval-Augmented Generation",
+      "decision": "include"
+    },
+    {
+      "paper_id": "P021",
+      "title": "AGE: Adaptive-masking for Graph Embedding in Graph Retrieval-Augmented Generation",
+      "decision": "include"
+    },
+    {
+      "paper_id": "P022",
+      "title": "PathRouter: Aligning Rewards with Retrieval Quality in Agentic Graph Retrieval-Augmented Generation",
+      "decision": "include"
+    },
+    {
+      "paper_id": "P023",
+      "title": "MKG-RAG-Bench: Benchmarking Retrieval in Multimodal Knowledge Graph-Augmented Generation",
+      "decision": "exclude"
+    },
+    {
+      "paper_id": "P024",
+      "title": "Lightweight and Direct Document Relevance Optimization for Generative Information Retrieval",
+      "decision": "include"
+    },
+    {
+      "paper_id": "P025",
+      "title": "On Single and Multiple Representations in Dense Passage Retrieval",
+      "decision": "exclude"
+    },
+    {
+      "paper_id": "P026",
+      "title": "DESIRE-ME: Domain-Enhanced Supervised Information REtrieval using Mixture-of-Experts",
+      "decision": "exclude"
+    },
+    {
+      "paper_id": "P027",
+      "title": "A Surprisingly Simple yet Effective Multi-Query Rewriting Method for Conversational Passage Retrieval",
+      "decision": "exclude"
+    },
+    {
+      "paper_id": "P028",
+      "title": "Do the Findings of Document and Passage Retrieval Generalize to the Retrieval of Responses for Dialogues?",
+      "decision": "exclude"
+    },
+    {
+      "paper_id": "P029",
+      "title": "MIRAGE: A Metric-Intensive Benchmark for Retrieval-Augmented Generation Evaluation",
+      "decision": "exclude"
+    },
+    {
+      "paper_id": "P030",
+      "title": "Towards Proactive Information Retrieval in Noisy Text with Wikipedia Concepts",
+      "decision": "exclude"
+    },
+    {
+      "paper_id": "P031",
+      "title": "Towards More Robust Retrieval-Augmented Generation: Evaluating RAG Under Adversarial Poisoning Attacks",
+      "decision": "include"
+    },
+    {
+      "paper_id": "P032",
+      "title": "Retrieval Augmented Generation Evaluation for Health Documents",
+      "decision": "exclude"
+    }
+  ],
+  "extraction": [
+    {
+      "paper_id": "P001",
+      "title": "Uncertainty-Aware Hybrid Retrieval for Long-Document RAG",
+      "status": "ok",
+      "fields": {
+        "domain": "question answering",
+        "hybrid_type": "hybrid retrieval",
+        "vector_db": null,
+        "llm_used": null,
+        "embedding_model": null
+      },
+      "sources": {
+        "domain": "Experiments on question answering benchmarks show that uncertainty-aware fusion and parent promotion improve generation quality while maintaining a lightweight, plug-and-play retrieval pipeline.",
+        "hybrid_type": "We propose Uncertainty-aware Multi-Granularity RAG (UMG-RAG), a training-free hybrid retrieval framework that treats chunk granularity as query-specific reliability estimation.",
+        "vector_db": null,
+        "llm_used": null,
+        "embedding_model": null
+      },
+      "n_chunks": 1
+    },
+    {
+      "paper_id": "P002",
+      "title": "Multi-Field Hybrid Retrieval-Augmented Generation for Maritime Accident Root Cause Analysis",
+      "status": "ok",
+      "fields": {
+        "domain": "maritime accident root cause analysis",
+        "hybrid_type": "field-aware hybrid",
+        "vector_db": null,
+        "llm_used": "LLM",
+        "embedding_model": null
+      },
+      "sources": {
+        "domain": "Maritime accident adjudication reports contain critical tribunal findings for root cause analysis (RCA), yet retrieving relevant precedents and drafting consistent reports from decades of records remains labor-intensive. This paper proposes a multi-field hybrid retrieval-augmented generation (RAG) framework for automated maritime RCA",
+        "hybrid_type": "Our retrieval strategy employs a field-aware hybrid approach, fusing sparse and dense rankings via Reciprocal Rank Fusion (RRF).",
+        "vector_db": null,
+        "llm_used": "Furthermore, grounding the generator on the retrieved precedents enhances RCA generation quality over an LLM-only baseline",
+        "embedding_model": null
+      },
+      "n_chunks": 1
+    },
+    {
+      "paper_id": "P003",
+      "title": "A Hybrid Retrieval and Reranking Framework for Evidence-Grounded Retrieval-Augmented Generation",
+      "status": "ok",
+      "fields": {
+        "domain": "biomedical and healthcare-related document question answering",
+        "hybrid_type": "hybrid retrieval",
+        "vector_db": "Amazon OpenSearch Serverless",
+        "llm_used": "Amazon Bedrock",
+        "embedding_model": "Amazon Titan Text Embeddings V2"
+      },
+      "sources": {
+        "domain": "This study presents a hybrid retrieval and reranking framework for citation-aware RAG in biomedical and healthcare-related document question answering.",
+        "hybrid_type": "Hybrid retrieval first retrieves candidate evidence chunks, and Cohere reranking then prioritizes the most relevant passages before answer generation.",
+        "vector_db": "Source PDF documents are stored in Amazon S3, embedded using Amazon Titan Text Embeddings V2, and indexed with Amazon OpenSearch Serverless.",
+        "llm_used": "The framework uses Amazon Bedrock Knowledge Bases for document ingestion, parsing, chunking, embedding generation, and evidence retrieval.",
+        "embedding_model": "Source PDF documents are stored in Amazon S3, embedded using Amazon Titan Text Embeddings V2, and indexed with Amazon OpenSearch Serverless."
+      },
+      "n_chunks": 1
+    },
+    {
+      "paper_id": "P004",
+      "title": "Agentic Hybrid RAG for Evidence-Grounded Muon Collider Analysis",
+      "status": "ok",
+      "fields": {
+        "domain": "muon collider research",
+        "hybrid_type": "hybrid retriever, integrating sparse lexical and dense semantic retrieval",
+        "vector_db": null,
+        "llm_used": null,
+        "embedding_model": null
+      },
+      "sources": {
+        "domain": "Muon collider research spans accelerator physics, detector instrumentation, and high-energy phenomenology",
+        "hybrid_type": "The framework combines a hybrid retriever, integrating sparse lexical and dense semantic retrieval, with an agentic reasoning module",
+        "vector_db": null,
+        "llm_used": null,
+        "embedding_model": null
+      },
+      "n_chunks": 1
+    },
+    {
+      "paper_id": "P005",
+      "title": "Efficient RAG with Intent-Aware Retrieval and Semantics-Preserving Chunking",
+      "status": "ok",
+      "fields": {
+        "domain": "question answering",
+        "hybrid_type": "dynamic hybrid retrieval",
+        "vector_db": null,
+        "llm_used": "small language models (SLMs)",
+        "embedding_model": null
+      },
+      "sources": {
+        "domain": "Our method achieves significant gains on multi-hop and evidence-sensitive tasks, with a 2.65-point improvement in F1 on HotPotQA and a 1.5-point increase in accuracy on FEVER.",
+        "hybrid_type": "IAR implements a dynamic hybrid retrieval method that adaptively weights the retrieval channels based on the query intent",
+        "vector_db": null,
+        "llm_used": "To alleviate the computational latency brought by our iterative mechanism, we leverage small language models (SLMs).",
+        "embedding_model": null
+      },
+      "n_chunks": 1
+    },
+    {
+      "paper_id": "P006",
+      "title": "Hierarchical Abstract Tree for Cross-Document Retrieval-Augmented Generation",
+      "status": "ok",
+      "fields": {
+        "domain": "cross-document multi-hop QA",
+        "hybrid_type": "hybrid retriever",
+        "vector_db": null,
+        "llm_used": null,
+        "embedding_model": null
+      },
+      "sources": {
+        "domain": "On cross-document multi-hop QA benchmarks",
+        "hybrid_type": "an agent-powered hybrid retriever",
+        "vector_db": null,
+        "llm_used": null,
+        "embedding_model": null
+      },
+      "n_chunks": 1
+    },
+    {
+      "paper_id": "P009",
+      "title": "AR-RAG: Autoregressive Retrieval Augmentation for Image Generation",
+      "status": "ok",
+      "fields": {
+        "domain": "image generation",
+        "hybrid_type": "autoregressive retrieval",
+        "vector_db": null,
+        "llm_used": null,
+        "embedding_model": null
+      },
+      "sources": {
+        "domain": "AR-RAG: Autoregressive Retrieval Augmentation for Image Generation",
+        "hybrid_type": "We introduce Autoregressive Retrieval Augmentation (AR-RAG), a novel paradigm that enhances image generation by autoregressively incorporating k nearest neighbor retrievals at the patch level.",
+        "vector_db": null,
+        "llm_used": null,
+        "embedding_model": null
+      },
+      "n_chunks": 1
+    },
+    {
+      "paper_id": "P010",
+      "title": "EVOR: Evolving Retrieval for Code Generation",
+      "status": "ok",
+      "fields": {
+        "domain": "code generation",
+        "hybrid_type": "retrieval-augmented generation",
+        "vector_db": null,
+        "llm_used": "Large Language Models",
+        "embedding_model": null
+      },
+      "sources": {
+        "domain": "retrieval-augmented generation (RAG) has been successfully applied in code generation.",
+        "hybrid_type": "retrieval-augmented generation (RAG) has been successfully applied in code generation.",
+        "vector_db": null,
+        "llm_used": "limiting the adaptation capabilities of Large Language Models (LLMs) to domains they have insufficient knowledge of.",
+        "embedding_model": null
+      },
+      "n_chunks": 1
+    },
+    {
+      "paper_id": "P012",
+      "title": "Automated Literature Review Using NLP Techniques and LLM-Based Retrieval-Augmented Generation",
+      "status": "ok",
+      "fields": {
+        "domain": "literature review generation",
+        "hybrid_type": "retrieval-augmented generation",
+        "vector_db": null,
+        "llm_used": "GPT-3.5-turbo",
+        "embedding_model": null
+      },
+      "sources": {
+        "domain": "Automated Literature Review Using NLP Techniques and LLM-Based Retrieval-Augmented Generation This research presents and compares multiple approaches to automate the generation of literature reviews",
+        "hybrid_type": "retrieval-augmented generation (RAG) with a Large Language Model (LLM)",
+        "vector_db": null,
+        "llm_used": "retrieval-augmented generation (RAG) with Large Language Model (GPT-3.5-turbo)",
+        "embedding_model": null
+      },
+      "n_chunks": 1
+    },
+    {
+      "paper_id": "P013",
+      "title": "MUST-RAG: MUSical Text Question Answering with Retrieval Augmented Generation",
+      "status": "ok",
+      "fields": {
+        "domain": "music",
+        "hybrid_type": "Retrieval Augmented Generation",
+        "vector_db": "MusWikiDB",
+        "llm_used": null,
+        "embedding_model": null
+      },
+      "sources": {
+        "domain": "to adapt general-purpose LLMs for text-only music question answering (MQA) tasks.",
+        "hybrid_type": "we propose MusT-RAG, a comprehensive framework based on Retrieval Augmented Generation (RAG) to adapt general-purpose LLMs for text-only music question answering (MQA) tasks.",
+        "vector_db": "we (1) propose MusWikiDB, a music-specialized vector database for the retrieval stage",
+        "llm_used": null,
+        "embedding_model": null
+      },
+      "n_chunks": 1
+    },
+    {
+      "paper_id": "P014",
+      "title": "LURE-RAG: Lightweight Utility-driven Reranking for Efficient RAG",
+      "status": "ok",
+      "fields": {
+        "domain": "question answering",
+        "hybrid_type": "reranking",
+        "vector_db": null,
+        "llm_used": null,
+        "embedding_model": null
+      },
+      "sources": {
+        "domain": "downstream task such as question answering",
+        "hybrid_type": "Lightweight Utility-driven Reranking for Efficient RAG (LURE-RAG), a framework that augments any black-box retriever with an efficient LambdaMART-based reranker.",
+        "vector_db": null,
+        "llm_used": null,
+        "embedding_model": null
+      },
+      "n_chunks": 1
+    },
+    {
+      "paper_id": "P016",
+      "title": "Efficient Retrieval-Augmented Generation via Token Co-occurrence Graphs",
+      "status": "ok",
+      "fields": {
+        "domain": "Question Answering",
+        "hybrid_type": "graph-based",
+        "vector_db": null,
+        "llm_used": "Large Language Models",
+        "embedding_model": null
+      },
+      "sources": {
+        "domain": "We evaluated TIGRAG on three widely adopted multi-hop Question Answering (QA) benchmarks.",
+        "hybrid_type": "graph-based RAG methods",
+        "vector_db": null,
+        "llm_used": "Retrieval-Augmented Generation (RAG) mitigates hallucinations in Large Language Models (LLMs)",
+        "embedding_model": null
+      },
+      "n_chunks": 1
+    },
+    {
+      "paper_id": "P017",
+      "title": "RMIT-ADM+S at the MMU-RAG NeurIPS 2025 Competition",
+      "status": "ok",
+      "fields": {
+        "domain": "Text-to-Text",
+        "hybrid_type": "Retrieval-Augmented Generation",
+        "vector_db": null,
+        "llm_used": null,
+        "embedding_model": null
+      },
+      "sources": {
+        "domain": "This paper presents the award-winning RMIT-ADM+S system for the Text-to-Text track of the NeurIPS~2025 MMU-RAG Competition.",
+        "hybrid_type": "We introduce Routing-to-RAG (R2RAG), a research-focused retrieval-augmented generation (RAG) architecture composed of lightweight components that dynamically adapt the retrieval strategy based on inferred query complexity and evidence sufficiency.",
+        "vector_db": null,
+        "llm_used": null,
+        "embedding_model": null
+      },
+      "n_chunks": 1
+    },
+    {
+      "paper_id": "P018",
+      "title": "Simple Is Effective: The Roles of Graphs and Large Language Models in Knowledge-Graph-Based Retrieval-Augmented Generation",
+      "status": "ok",
+      "fields": {
+        "domain": "Knowledge-Graph-Based Retrieval-Augmented Generation",
+        "hybrid_type": "Subgraph retrieval",
+        "vector_db": null,
+        "llm_used": "Llama3.1-8B-Instruct, GPT-4o",
+        "embedding_model": null
+      },
+      "sources": {
+        "domain": "Knowledge Graph (KG)-based Retrieval-Augmented Generation (RAG) addresses these issues by grounding LLM outputs in structured external knowledge from KGs.",
+        "hybrid_type": "We introduce SubgraphRAG, extending the KG-based RAG framework that retrieves subgraphs and leverages LLMs for reasoning and answer prediction.",
+        "vector_db": null,
+        "llm_used": "Notably, based on our retrieved subgraphs, smaller LLMs like Llama3.1-8B-Instruct deliver competitive results with explainable reasoning, while larger models like GPT-4o achieve state-of-the-art accuracy compared with previous baselines",
+        "embedding_model": null
+      },
+      "n_chunks": 1
+    },
+    {
+      "paper_id": "P019",
+      "title": "Dissecting Agentic RAG: A Component Ablation for Multi-Hop QA with a Local 7B Model",
+      "status": "ok",
+      "fields": {
+        "domain": "multi-hop question answering",
+        "hybrid_type": "fixed hybrid retrieval",
+        "vector_db": null,
+        "llm_used": "Qwen2.5-7B-Instruct",
+        "embedding_model": null
+      },
+      "sources": {
+        "domain": "Agentic retrieval-augmented generation (RAG) systems combine iterative reasoning loops, query decomposition, and adaptive retrieval to tackle multi-hop question answering.",
+        "hybrid_type": "(1) fixed hybrid retrieval via reciprocal rank fusion consistently outperforms rule-based adaptive routing",
+        "vector_db": null,
+        "llm_used": "using a local 7B parameter model (Qwen2.5-7B-Instruct).",
+        "embedding_model": null
+      },
+      "n_chunks": 1
+    },
+    {
+      "paper_id": "P020",
+      "title": "Covering the Unseen: Information Demand Coverage Optimization for Retrieval-Augmented Generation",
+      "status": "ok",
+      "fields": {
+        "domain": "Question Answering",
+        "hybrid_type": "Retrieval-Augmented Generation",
+        "vector_db": null,
+        "llm_used": null,
+        "embedding_model": null
+      },
+      "sources": {
+        "domain": "On six open-domain QA benchmarks, GeoRAG improves exact match (EM) by +6.5 to +7.5 points over top-k truncation (up to +9.7 on HotpotQA and ASQA) and outperforms strong baselines including MMR, DPP, BGE-Reranker, SMART-RAG, and AdaGReS, with stable gains across context budgets and sub-query generators.",
+        "hybrid_type": "Retrieval-augmented generation (RAG) typically treats context selection as ranking chunks against a single query embedding.",
+        "vector_db": null,
+        "llm_used": null,
+        "embedding_model": null
+      },
+      "n_chunks": 1
+    },
+    {
+      "paper_id": "P021",
+      "title": "AGE: Adaptive-masking for Graph Embedding in Graph Retrieval-Augmented Generation",
+      "status": "ok",
+      "fields": {
+        "domain": "GraphQA",
+        "hybrid_type": null,
+        "vector_db": null,
+        "llm_used": "large language models (LLMs), frozen LLMs",
+        "embedding_model": "Transformer"
+      },
+      "sources": {
+        "domain": "Our experimental results indicate that AGE significantly improves approaches using non-parametric search component in GraphQA tasks",
+        "hybrid_type": null,
+        "vector_db": null,
+        "llm_used": "supports large language models (LLMs) by referring to graph-structured data as external knowledge. While this technique ideally captures intricate relationships, it often struggles with graph representations for LLMs, particularly for frozen LLMs",
+        "embedding_model": "AGE employs a Transformer in a mask-based self-supervised learning (SSL) approach. We designed the architecture similar to text embedding encoders"
+      },
+      "n_chunks": 1
+    },
+    {
+      "paper_id": "P022",
+      "title": "PathRouter: Aligning Rewards with Retrieval Quality in Agentic Graph Retrieval-Augmented Generation",
+      "status": "ok",
+      "fields": {
+        "domain": "Graph Retrieval-Augmented Generation",
+        "hybrid_type": null,
+        "vector_db": null,
+        "llm_used": "language-model agents",
+        "embedding_model": null
+      },
+      "sources": {
+        "domain": "Agentic GraphRAG trains language-model agents to iteratively retrieve and reason over graph-structured evidence",
+        "hybrid_type": null,
+        "vector_db": null,
+        "llm_used": "Agentic GraphRAG trains language-model agents to iteratively retrieve and reason over graph-structured evidence",
+        "embedding_model": null
+      },
+      "n_chunks": 1
+    },
+    {
+      "paper_id": "P024",
+      "title": "Lightweight and Direct Document Relevance Optimization for Generative Information Retrieval",
+      "status": "ok",
+      "fields": {
+        "domain": "Generative Information Retrieval",
+        "hybrid_type": null,
+        "vector_db": null,
+        "llm_used": null,
+        "embedding_model": null
+      },
+      "sources": {
+        "domain": "Generative information retrieval (GenIR) is a promising neural retrieval paradigm",
+        "hybrid_type": null,
+        "vector_db": null,
+        "llm_used": null,
+        "embedding_model": null
+      },
+      "n_chunks": 1
+    },
+    {
+      "paper_id": "P031",
+      "title": "Towards More Robust Retrieval-Augmented Generation: Evaluating RAG Under Adversarial Poisoning Attacks",
+      "status": "ok",
+      "fields": {
+        "domain": "Retrieval-Augmented Generation",
+        "hybrid_type": null,
+        "vector_db": null,
+        "llm_used": null,
+        "embedding_model": null
+      },
+      "sources": {
+        "domain": "Retrieval-Augmented Generation (RAG) systems have emerged as a promising solution to mitigate LLM hallucinations and enhance their performance in knowledge-intensive domains.",
+        "hybrid_type": null,
+        "vector_db": null,
+        "llm_used": null,
+        "embedding_model": null
+      },
+      "n_chunks": 1
+    }
+  ],
+  "synthesis": {
+    "research_question": "What hybrid retrieval strategies and components (dense, sparse, reranking, graph) do the included systems use?",
+    "narrative": "The included systems employ a variety of hybrid retrieval strategies and components. Some systems combine dense and sparse retrieval methods, often using Reciprocal Rank Fusion (RRF) to fuse their rankings [P002, P019]. For instance, one framework uses Amazon Titan Text Embeddings V2 for embedding and Amazon OpenSearch Serverless for indexing, combining candidate retrieval with reranking by Cohere [P003]. Another approach, Uncertainty-aware Multi-Granularity RAG (UMG-RAG), uses existing dense and sparse retrievers as complementary experts across multiple chunk granularities, fusing candidates based on query-specific confidence [P001].\n\nReranking is a common component, with some systems using cross-encoders for reranking [P019] or a LambdaMART-based reranker trained with an LLM utility-guided listwise ranking loss [P014]. One framework integrates a hybrid retriever, combining sparse lexical and dense semantic retrieval, with an agentic reasoning module for query decomposition and evidence expansion [P004]. Another system uses an agent-powered hybrid retriever as part of a multi-granular retrieval agent [P006].\n\nGraph-based components are also utilized. One framework, TIGRAG, uses a token co-occurrence knowledge graph and combines graph-based semantic expansion with neural reranking for multi-hop reasoning [P016]. Other systems leverage knowledge graphs for retrieval, with one approach, SubgraphRAG, retrieving subgraphs and using a multilayer perceptron with a parallel triple-scoring mechanism for efficient subgraph retrieval [P018]. Adaptive masking for graph embedding (AGE) is employed to address misalignment between graph-based and text-based latent features in GraphRAG [P021]. PathRouter is a path-aware training framework for agentic GraphRAG that jointly evaluates trajectories based on answer correctness and evidence-path overlap [P022].\n\nSome systems incorporate adaptive or dynamic retrieval strategies. One framework uses an intention-aware retriever that adaptively weights retrieval channels based on query intent [P005]. Another system, Routing-to-RAG (R2RAG), dynamically adapts the retrieval strategy based on inferred query complexity and evidence sufficiency [P017].",
+    "cited": [
+      "P001",
+      "P002",
+      "P003",
+      "P004",
+      "P005",
+      "P006",
+      "P014",
+      "P016",
+      "P017",
+      "P018",
+      "P019",
+      "P021",
+      "P022"
+    ],
+    "invented_flagged": []
+  }
+}

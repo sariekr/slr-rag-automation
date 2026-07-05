@@ -13,9 +13,9 @@ authors:
     affiliation: "Department of Management Information Systems, Başkent University, Ankara, Türkiye"
 repository-code: "https://github.com/sariekr/slr-rag-automation"
 license: MIT
-version: "v1.0.0"
+version: "v1.1.0"
 date-released: "2026-07-05"
-doi: "10.5281/zenodo.21205680"
+doi: "10.5281/zenodo.21205679"
 keywords:
   - systematic literature review
   - retrieval-augmented generation

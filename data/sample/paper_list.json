@@ -7,7 +7,8 @@
     "author": "Hoin Jung, Xiaoqian Wang",
     "txt_file": "2606.13550.txt",
     "arxiv_id": "2606.13550",
-    "license": "CC BY 4.0"
+    "license": "CC BY 4.0",
+    "screening_label": "include"
   },
   {
     "paper_id": "P002",
@@ -17,7 +18,8 @@
     "author": "Seongjin Kim, Sungil Kim",
     "txt_file": "2606.13249.txt",
     "arxiv_id": "2606.13249",
-    "license": "CC BY 4.0"
+    "license": "CC BY 4.0",
+    "screening_label": "include"
   },
   {
     "paper_id": "P003",
@@ -27,7 +29,8 @@
     "author": "Fariba Afrin Irany, Sampson Akwafuo",
     "txt_file": "2605.01664.txt",
     "arxiv_id": "2605.01664",
-    "license": "CC BY 4.0"
+    "license": "CC BY 4.0",
+    "screening_label": "include"
   },
   {
     "paper_id": "P004",
@@ -37,7 +40,8 @@
     "author": "Ruobing Jiang, Dawei Fu, Cheng Jiang, Tianyi Yang, Zijian Wang, Youpeng Wu, Yong Ban, Yajun Mao, Qiang Li",
     "txt_file": "2606.10381.txt",
     "arxiv_id": "2606.10381",
-    "license": "CC BY 4.0"
+    "license": "CC BY 4.0",
+    "screening_label": "include"
   },
   {
     "paper_id": "P005",
@@ -47,7 +51,8 @@
     "author": "Fachrina Dewi Puspitasari, Chaoning Zhang, Jiaquan Zhang, Zhicheng Wang, Hafiz Shakeel Ahmad Awan, Rizwan Qureshi, Jewon Lee, Tae-Ho Kim, Yang Yang",
     "txt_file": "2606.01240.txt",
     "arxiv_id": "2606.01240",
-    "license": "CC BY 4.0"
+    "license": "CC BY 4.0",
+    "screening_label": "include"
   },
   {
     "paper_id": "P006",
@@ -57,7 +62,8 @@
     "author": "Ziwen Zhao, Menglin Yang",
     "txt_file": "2605.00529.txt",
     "arxiv_id": "2605.00529",
-    "license": "CC BY 4.0"
+    "license": "CC BY 4.0",
+    "screening_label": "include"
   },
   {
     "paper_id": "P007",
@@ -67,6 +73,282 @@
     "author": "Aoran Gan, Hao Yu, Kai Zhang, Qi Liu, Wenyu Yan, Zhenya Huang, Shiwei Tong, Guoping Hu",
     "txt_file": "2504.14891.txt",
     "arxiv_id": "2504.14891",
-    "license": "CC BY 4.0"
+    "license": "CC BY 4.0",
+    "screening_label": "exclude"
+  },
+  {
+    "paper_id": "P008",
+    "doi": "10.48550/arXiv.2309.15217",
+    "title": "Ragas: Automated Evaluation of Retrieval Augmented Generation",
+    "year": "2023",
+    "author": "Shahul Es, Jithin James, Luis Espinosa-Anke, Steven Schockaert",
+    "txt_file": "2309.15217.txt",
+    "arxiv_id": "2309.15217",
+    "license": "CC BY 4.0",
+    "screening_label": "exclude"
+  },
+  {
+    "paper_id": "P009",
+    "doi": "10.48550/arXiv.2506.06962",
+    "title": "AR-RAG: Autoregressive Retrieval Augmentation for Image Generation",
+    "year": "2025",
+    "author": "Jingyuan Qi, Zhiyang Xu, Qifan Wang, Lifu Huang",
+    "txt_file": "2506.06962.txt",
+    "arxiv_id": "2506.06962",
+    "license": "CC BY 4.0",
+    "screening_label": "exclude"
+  },
+  {
+    "paper_id": "P010",
+    "doi": "10.48550/arXiv.2402.12317",
+    "title": "EVOR: Evolving Retrieval for Code Generation",
+    "year": "2024",
+    "author": "Hongjin Su, Shuyang Jiang, Yuhang Lai, Haoyuan Wu, Boao Shi, Che Liu, Qian Liu, Tao Yu",
+    "txt_file": "2402.12317.txt",
+    "arxiv_id": "2402.12317",
+    "license": "CC BY 4.0",
+    "screening_label": "include"
+  },
+  {
+    "paper_id": "P011",
+    "doi": "10.48550/arXiv.2601.05264",
+    "title": "Engineering the RAG Stack: A Comprehensive Review of the Architecture and Trust Frameworks for Retrieval-Augmented Generation Systems",
+    "year": "2025",
+    "author": "Dean Wampler, Dave Nielson, Alireza Seddighi",
+    "txt_file": "2601.05264.txt",
+    "arxiv_id": "2601.05264",
+    "license": "CC BY 4.0",
+    "screening_label": "exclude"
+  },
+  {
+    "paper_id": "P012",
+    "doi": "10.48550/arXiv.2411.18583",
+    "title": "Automated Literature Review Using NLP Techniques and LLM-Based Retrieval-Augmented Generation",
+    "year": "2024",
+    "author": "Nurshat Fateh Ali, Md. Mahdi Mohtasim, Shakil Mosharrof, T. Gopi Krishna",
+    "txt_file": "2411.18583.txt",
+    "arxiv_id": "2411.18583",
+    "license": "CC BY 4.0",
+    "screening_label": "exclude"
+  },
+  {
+    "paper_id": "P013",
+    "doi": "10.48550/arXiv.2507.23334",
+    "title": "MUST-RAG: MUSical Text Question Answering with Retrieval Augmented Generation",
+    "year": "2025",
+    "author": "Daeyong Kwon, SeungHeon Doh, Juhan Nam",
+    "txt_file": "2507.23334.txt",
+    "arxiv_id": "2507.23334",
+    "license": "CC BY 4.0",
+    "screening_label": "exclude"
+  },
+  {
+    "paper_id": "P014",
+    "doi": "10.48550/arXiv.2601.19535",
+    "title": "LURE-RAG: Lightweight Utility-driven Reranking for Efficient RAG",
+    "year": "2026",
+    "author": "Manish Chandra, Debasis Ganguly, Iadh Ounis",
+    "txt_file": "2601.19535.txt",
+    "arxiv_id": "2601.19535",
+    "license": "CC BY 4.0",
+    "screening_label": "include"
+  },
+  {
+    "paper_id": "P015",
+    "doi": "10.48550/arXiv.2401.15391",
+    "title": "MultiHop-RAG: Benchmarking Retrieval-Augmented Generation for Multi-Hop Queries",
+    "year": "2024",
+    "author": "Yixuan Tang, Yi Yang",
+    "txt_file": "2401.15391.txt",
+    "arxiv_id": "2401.15391",
+    "license": "CC BY-SA 4.0",
+    "screening_label": "exclude"
+  },
+  {
+    "paper_id": "P016",
+    "doi": "10.48550/arXiv.2606.30093",
+    "title": "Efficient Retrieval-Augmented Generation via Token Co-occurrence Graphs",
+    "year": "2026",
+    "author": "Gianluca Bonifazi, Christopher Buratti, Michele Marchetti, Federica Parlapiano, Giulia Quaglieri, Davide Traini, Domenico Ursino, Luca Virgili",
+    "txt_file": "2606.30093.txt",
+    "arxiv_id": "2606.30093",
+    "license": "CC BY 4.0",
+    "screening_label": "include"
+  },
+  {
+    "paper_id": "P017",
+    "doi": "10.48550/arXiv.2602.20735",
+    "title": "RMIT-ADM+S at the MMU-RAG NeurIPS 2025 Competition",
+    "year": "2026",
+    "author": "Kun Ran, Marwah Alaofi, Danula Hettiachchi, Chenglong Ma, Khoi Nguyen Dinh Anh, Khoi Vo Nguyen, Sachin Pathiyan Cherumanal, Lida Rashidi, Falk Scholer, Damiano Spina, Shuoqi Sun, Oleg Zendel",
+    "txt_file": "2602.20735.txt",
+    "arxiv_id": "2602.20735",
+    "license": "CC BY 4.0",
+    "screening_label": "include"
+  },
+  {
+    "paper_id": "P018",
+    "doi": "10.48550/arXiv.2410.20724",
+    "title": "Simple Is Effective: The Roles of Graphs and Large Language Models in Knowledge-Graph-Based Retrieval-Augmented Generation",
+    "year": "2024",
+    "author": "Mufei Li, Siqi Miao, Pan Li",
+    "txt_file": "2410.20724.txt",
+    "arxiv_id": "2410.20724",
+    "license": "CC BY 4.0",
+    "screening_label": "include"
+  },
+  {
+    "paper_id": "P019",
+    "doi": "10.48550/arXiv.2606.21553",
+    "title": "Dissecting Agentic RAG: A Component Ablation for Multi-Hop QA with a Local 7B Model",
+    "year": "2026",
+    "author": "Sheroz Shaikh",
+    "txt_file": "2606.21553.txt",
+    "arxiv_id": "2606.21553",
+    "license": "CC BY 4.0",
+    "screening_label": "include"
+  },
+  {
+    "paper_id": "P020",
+    "doi": "10.48550/arXiv.2606.29328",
+    "title": "Covering the Unseen: Information Demand Coverage Optimization for Retrieval-Augmented Generation",
+    "year": "2026",
+    "author": "Bingxue Zhang, Jianying Jia, Feida Zhu",
+    "txt_file": "2606.29328.txt",
+    "arxiv_id": "2606.29328",
+    "license": "CC BY 4.0",
+    "screening_label": "exclude"
+  },
+  {
+    "paper_id": "P021",
+    "doi": "10.48550/arXiv.2607.00052",
+    "title": "AGE: Adaptive-masking for Graph Embedding in Graph Retrieval-Augmented Generation",
+    "year": "2026",
+    "author": "Bao Long Nguyen Huu, Atsushi Hashimoto",
+    "txt_file": "2607.00052.txt",
+    "arxiv_id": "2607.00052",
+    "license": "CC BY 4.0",
+    "screening_label": "exclude"
+  },
+  {
+    "paper_id": "P022",
+    "doi": "10.48550/arXiv.2606.16409",
+    "title": "PathRouter: Aligning Rewards with Retrieval Quality in Agentic Graph Retrieval-Augmented Generation",
+    "year": "2026",
+    "author": "Bo Wang, Heyan Huang, Yaolin Li, Wei Tang, Yuan Zhang, Wenbo Li, Mingze Gao, Ge Shi, Chong Feng",
+    "txt_file": "2606.16409.txt",
+    "arxiv_id": "2606.16409",
+    "license": "CC BY 4.0",
+    "screening_label": "exclude"
+  },
+  {
+    "paper_id": "P023",
+    "doi": "10.48550/arXiv.2606.26458",
+    "title": "MKG-RAG-Bench: Benchmarking Retrieval in Multimodal Knowledge Graph-Augmented Generation",
+    "year": "2026",
+    "author": "Xiaochen Wang, Bao Hoang, Han Liu, Ting Wang, Fenglong Ma",
+    "txt_file": "2606.26458.txt",
+    "arxiv_id": "2606.26458",
+    "license": "CC BY 4.0",
+    "screening_label": "exclude"
+  },
+  {
+    "paper_id": "P024",
+    "doi": "10.48550/arXiv.2504.05181",
+    "title": "Lightweight and Direct Document Relevance Optimization for Generative Information Retrieval",
+    "year": "2025",
+    "author": "Kidist Amde Mekonnen, Yubao Tang, Maarten de Rijke",
+    "txt_file": "2504.05181.txt",
+    "arxiv_id": "2504.05181",
+    "license": "CC BY 4.0",
+    "screening_label": "exclude"
+  },
+  {
+    "paper_id": "P025",
+    "doi": "10.48550/arXiv.2108.06279",
+    "title": "On Single and Multiple Representations in Dense Passage Retrieval",
+    "year": "2021",
+    "author": "Craig Macdonald, Nicola Tonellotto, Iadh Ounis",
+    "txt_file": "2108.06279.txt",
+    "arxiv_id": "2108.06279",
+    "license": "CC BY 4.0",
+    "screening_label": "exclude"
+  },
+  {
+    "paper_id": "P026",
+    "doi": "10.48550/arXiv.2403.13468",
+    "title": "DESIRE-ME: Domain-Enhanced Supervised Information REtrieval using Mixture-of-Experts",
+    "year": "2024",
+    "author": "Pranav Kasela, Gabriella Pasi, Raffaele Perego, Nicola Tonellotto",
+    "txt_file": "2403.13468.txt",
+    "arxiv_id": "2403.13468",
+    "license": "CC BY 4.0",
+    "screening_label": "exclude"
+  },
+  {
+    "paper_id": "P027",
+    "doi": "10.48550/arXiv.2406.18960",
+    "title": "A Surprisingly Simple yet Effective Multi-Query Rewriting Method for Conversational Passage Retrieval",
+    "year": "2024",
+    "author": "Ivica Kostric, Krisztian Balog",
+    "txt_file": "2406.18960.txt",
+    "arxiv_id": "2406.18960",
+    "license": "CC BY 4.0",
+    "screening_label": "exclude"
+  },
+  {
+    "paper_id": "P028",
+    "doi": "10.48550/arXiv.2301.05508",
+    "title": "Do the Findings of Document and Passage Retrieval Generalize to the Retrieval of Responses for Dialogues?",
+    "year": "2023",
+    "author": "Gustavo Penha, Claudia Hauff",
+    "txt_file": "2301.05508.txt",
+    "arxiv_id": "2301.05508",
+    "license": "CC BY 4.0",
+    "screening_label": "exclude"
+  },
+  {
+    "paper_id": "P029",
+    "doi": "10.48550/arXiv.2504.17137",
+    "title": "MIRAGE: A Metric-Intensive Benchmark for Retrieval-Augmented Generation Evaluation",
+    "year": "2025",
+    "author": "Chanhee Park, Hyeonseok Moon, Chanjun Park, Heuiseok Lim",
+    "txt_file": "2504.17137.txt",
+    "arxiv_id": "2504.17137",
+    "license": "CC BY 4.0",
+    "screening_label": "exclude"
+  },
+  {
+    "paper_id": "P030",
+    "doi": "10.48550/arXiv.2210.09877",
+    "title": "Towards Proactive Information Retrieval in Noisy Text with Wikipedia Concepts",
+    "year": "2022",
+    "author": "Tabish Ahmed, Sahan Bulathwela",
+    "txt_file": "2210.09877.txt",
+    "arxiv_id": "2210.09877",
+    "license": "CC BY 4.0",
+    "screening_label": "exclude"
+  },
+  {
+    "paper_id": "P031",
+    "doi": "10.48550/arXiv.2412.16708",
+    "title": "Towards More Robust Retrieval-Augmented Generation: Evaluating RAG Under Adversarial Poisoning Attacks",
+    "year": "2024",
+    "author": "Jinyan Su, Jin Peng Zhou, Zhengxin Zhang, Preslav Nakov, Claire Cardie",
+    "txt_file": "2412.16708.txt",
+    "arxiv_id": "2412.16708",
+    "license": "CC BY 4.0",
+    "screening_label": "exclude"
+  },
+  {
+    "paper_id": "P032",
+    "doi": "10.48550/arXiv.2505.04680",
+    "title": "Retrieval Augmented Generation Evaluation for Health Documents",
+    "year": "2025",
+    "author": "Mario Ceresa, Lorenzo Bertolini, Valentin Comte, Nicholas Spadaro, Barbara Raffael, Brigitte Toussaint, Sergio Consoli, Amalia Muñoz Piñeiro, Alex Patak, Maddalena Querci, Tobias Wiesenthal",
+    "txt_file": "2505.04680.txt",
+    "arxiv_id": "2505.04680",
+    "license": "CC BY 4.0",
+    "screening_label": "exclude"
   }
 ]
