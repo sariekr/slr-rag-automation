@@ -121,7 +121,7 @@ app.py            FastAPI web application + REST API
 build_index.py    CLI indexer
 config.py         paths, model names, parameters (auto-selects baseline or bundled sample corpus)
 static/           single-page interface
-data/sample/      bundled, license-clean sample corpus (7 CC BY 4.0 arXiv papers)
+data/sample/      bundled, license-clean sample corpus (32 CC BY / CC BY-SA arXiv papers)
 src/
   indexing/       corpus, chunker, embedder, vector_store
   retrieval/      dense / hybrid (RRF) / reranker
