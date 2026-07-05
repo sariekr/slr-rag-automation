@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite both the software (this record) and the accompanying metapaper."
+title: "SLR-RAG: An Open, Traceable Retrieval-Augmented Pipeline for Systematic-Literature-Review Automation"
+type: software
+authors:
+  - family-names: "Sarı"
+    given-names: "Ekrem"
+    orcid: "https://orcid.org/[TO FILL]"
+    affiliation: "[TO FILL: Department, Başkent University, Ankara, Türkiye]"
+  - family-names: "Uysal"
+    given-names: "Murat Paşa"
+    orcid: "https://orcid.org/[TO FILL]"
+    affiliation: "[TO FILL: Department, Başkent University, Ankara, Türkiye]"
+repository-code: "https://github.com/sariekr/slr-rag-automation"
+license: MIT
+version: "v1.0.0"
+date-released: "[TO FILL: YYYY-MM-DD]"
+doi: "[TO FILL: 10.5281/zenodo.XXXXXXX]"
+keywords:
+  - systematic literature review
+  - retrieval-augmented generation
+  - large language models
+  - research software
+  - citation verification
+  - provenance
+  - reproducible research
+  - information retrieval

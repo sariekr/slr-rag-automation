@@ -1,0 +1,32 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      # The unit suite covers pure logic (citation reconciliation, source grounding,
+      # extraction status, evaluation metrics) and needs only scikit-learn + scipy,
+      # not the full embedding/vector stack, so this job stays fast.
+      - run: pip install scikit-learn scipy pytest
+      - run: python -m pytest tests/ -q
+
+  install-check:
+    # Proves the documented install path resolves: the pinned stack installs and the
+    # package imports. Heavier (pulls the embedding/vector wheels), so it runs separately.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install .
+      - run: python -c "import src, config; print('import OK, version', src.__version__)"

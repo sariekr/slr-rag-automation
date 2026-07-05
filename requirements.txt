@@ -1,0 +1,27 @@
+# SLR-RAG backend: pinned dependencies (requires Python >=3.11; validated on 3.11-3.13).
+# Update with care: changing chromadb / sentence-transformers / pymupdf majors has
+# historically broken the client API or wheel availability.
+
+# Indexing: chunking, embedding (OpenRouter API + local sentence-transformers fallback), vector store
+sentence-transformers==5.5.1
+chromadb==1.5.9
+numpy==2.4.6
+
+# Retrieval: hybrid (dense + BM25/RRF) + cross-encoder reranker
+# (CrossEncoder ships with sentence-transformers)
+rank-bm25==0.2.2
+
+# LLM client (OpenRouter, single light model)
+requests==2.34.2
+
+# Evaluation and statistics
+scikit-learn==1.8.0     # precision / recall / F1, Cohen's kappa
+scipy==1.17.1           # Wilcoxon, McNemar
+
+# Web application and API
+fastapi==0.136.3
+uvicorn==0.48.0
+reportlab==4.5.1        # PDF export
+python-multipart==0.0.29  # file upload
+pymupdf==1.27.2.3       # PDF text extraction
+feedparser==6.0.12      # arXiv Atom feed parsing

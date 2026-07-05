@@ -1,0 +1,72 @@
+[
+  {
+    "paper_id": "P001",
+    "doi": "10.48550/arXiv.2606.13550",
+    "title": "Uncertainty-Aware Hybrid Retrieval for Long-Document RAG",
+    "year": "2026",
+    "author": "Hoin Jung, Xiaoqian Wang",
+    "txt_file": "2606.13550.txt",
+    "arxiv_id": "2606.13550",
+    "license": "CC BY 4.0"
+  },
+  {
+    "paper_id": "P002",
+    "doi": "10.48550/arXiv.2606.13249",
+    "title": "Multi-Field Hybrid Retrieval-Augmented Generation for Maritime Accident Root Cause Analysis",
+    "year": "2026",
+    "author": "Seongjin Kim, Sungil Kim",
+    "txt_file": "2606.13249.txt",
+    "arxiv_id": "2606.13249",
+    "license": "CC BY 4.0"
+  },
+  {
+    "paper_id": "P003",
+    "doi": "10.48550/arXiv.2605.01664",
+    "title": "A Hybrid Retrieval and Reranking Framework for Evidence-Grounded Retrieval-Augmented Generation",
+    "year": "2026",
+    "author": "Fariba Afrin Irany, Sampson Akwafuo",
+    "txt_file": "2605.01664.txt",
+    "arxiv_id": "2605.01664",
+    "license": "CC BY 4.0"
+  },
+  {
+    "paper_id": "P004",
+    "doi": "10.48550/arXiv.2606.10381",
+    "title": "Agentic Hybrid RAG for Evidence-Grounded Muon Collider Analysis",
+    "year": "2026",
+    "author": "Ruobing Jiang, Dawei Fu, Cheng Jiang, Tianyi Yang, Zijian Wang, Youpeng Wu, Yong Ban, Yajun Mao, Qiang Li",
+    "txt_file": "2606.10381.txt",
+    "arxiv_id": "2606.10381",
+    "license": "CC BY 4.0"
+  },
+  {
+    "paper_id": "P005",
+    "doi": "10.48550/arXiv.2606.01240",
+    "title": "Efficient RAG with Intent-Aware Retrieval and Semantics-Preserving Chunking",
+    "year": "2026",
+    "author": "Fachrina Dewi Puspitasari, Chaoning Zhang, Jiaquan Zhang, Zhicheng Wang, Hafiz Shakeel Ahmad Awan, Rizwan Qureshi, Jewon Lee, Tae-Ho Kim, Yang Yang",
+    "txt_file": "2606.01240.txt",
+    "arxiv_id": "2606.01240",
+    "license": "CC BY 4.0"
+  },
+  {
+    "paper_id": "P006",
+    "doi": "10.48550/arXiv.2605.00529",
+    "title": "Hierarchical Abstract Tree for Cross-Document Retrieval-Augmented Generation",
+    "year": "2026",
+    "author": "Ziwen Zhao, Menglin Yang",
+    "txt_file": "2605.00529.txt",
+    "arxiv_id": "2605.00529",
+    "license": "CC BY 4.0"
+  },
+  {
+    "paper_id": "P007",
+    "doi": "10.48550/arXiv.2504.14891",
+    "title": "Retrieval Augmented Generation Evaluation in the Era of Large Language Models: A Comprehensive Survey",
+    "year": "2025",
+    "author": "Aoran Gan, Hao Yu, Kai Zhang, Qi Liu, Wenyu Yan, Zhenya Huang, Shiwei Tong, Guoping Hu",
+    "txt_file": "2504.14891.txt",
+    "arxiv_id": "2504.14891",
+    "license": "CC BY 4.0"
+  }
+]

@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retrieval-Augmented Literature Engine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper:   #f3eee2; --paper-2: #eae1d0; --ink: #1b1714; --ink-2: #4f483e;
+    --muted:   #948975; --line: #c9bca3; --accent: #c8341a; --accent-d:#9e2410;
+    --serif: "Fraunces", Georgia, serif;
+    --body:  "Newsreader", Georgia, serif;
+    --mono:  "JetBrains Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--paper); color: var(--ink);
+    font-family: var(--body); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  body::after {
+    content: ""; position: fixed; inset: 0; z-index: 9000; pointer-events: none; opacity: .05; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .spine { position: fixed; top: 0; left: 0; bottom: 0; width: 46px; z-index: 10;
+    background: var(--paper-2); border-right: 1px solid var(--line); display: flex; align-items: center; justify-content: center; }
+  .spine span { writing-mode: vertical-rl; transform: rotate(180deg); font-family: var(--mono);
+    font-size: 10.5px; letter-spacing: .42em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+  .sheet { max-width: 1400px; margin: 0 auto 0 max(46px, calc((100% - 1400px) / 2)); padding: 0 clamp(20px, 5vw, 78px); }
+
+  .masthead { padding: 46px 0 22px; border-bottom: 2.5px solid var(--ink); }
+  .masthead .kicker { font-family: var(--mono); font-size: 11.5px; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 14px; display: flex; gap: 14px; align-items: center; }
+  .masthead .kicker::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  .masthead-grid { display: grid; grid-template-columns: 1fr auto; gap: 30px; align-items: end; }
+  .title { font-family: var(--serif); font-weight: 600; font-size: clamp(38px, 7vw, 84px); line-height: .92;
+    letter-spacing: -.02em; margin: 0; font-optical-sizing: auto; }
+  .title em { font-style: italic; font-weight: 500; color: var(--accent); }
+  .colophon { font-family: var(--mono); font-size: 11.5px; line-height: 1.95; color: var(--ink-2);
+    text-align: right; border-left: 1px solid var(--line); padding-left: 20px; min-width: 200px; }
+  .colophon b { color: var(--ink); font-weight: 700; }
+  .colophon .dot { color: var(--accent); }
+
+  nav.toc { display: flex; gap: 0; border-bottom: 1px solid var(--line); margin-top: 4px; flex-wrap: wrap; }
+  .toc button { background: none; border: none; cursor: pointer; padding: 20px 22px 18px 0; margin-right: 26px;
+    display: flex; gap: 11px; align-items: baseline; border-bottom: 2.5px solid transparent; margin-bottom: -1px; transition: border-color .25s; }
+  .toc .num { font-family: var(--mono); font-size: 12px; color: var(--muted); transition: color .25s, transform .25s; }
+  .toc .nm { font-family: var(--serif); font-size: 20px; font-weight: 500; color: var(--ink-2); transition: color .25s; }
+  .toc button:hover .num { color: var(--accent); transform: translateY(-2px); }
+  .toc button:hover .nm { color: var(--ink); }
+  .toc button.active { border-bottom-color: var(--accent); }
+  .toc button.active .num, .toc button.active .nm { color: var(--ink); }
+  .toc button.active .num { color: var(--accent); }
+  .toc button.active .nm { font-weight: 600; }
+
+  .folio { position: relative; padding: 52px 0 90px; }
+  .folio.hidden { display: none; }
+  .bignum { position: absolute; top: 8px; right: -10px; font-family: var(--serif); font-weight: 800;
+    font-size: clamp(150px, 26vw, 320px); line-height: .8; color: transparent; -webkit-text-stroke: 1.4px var(--line);
+    z-index: 0; pointer-events: none; user-select: none; opacity: .6; }
+  .lede { position: relative; z-index: 1; max-width: 640px; margin-bottom: 36px; }
+  .lede h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(27px, 4vw, 42px); line-height: 1.02;
+    letter-spacing: -.015em; margin: 0 0 10px; }
+  .lede p { color: var(--ink-2); font-size: 18px; margin: 0; max-width: 560px; }
+  .lede .ico { color: var(--accent); margin-bottom: 14px; display: block; }
+
+  .form { position: relative; z-index: 1; max-width: 880px; }
+  label { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--muted); margin: 22px 0 8px; }
+  input[type=text], textarea, select, input[type=number] { width: 100%; padding: 13px 4px; border: none;
+    border-bottom: 1.5px solid var(--ink); font-family: var(--body); font-size: 18px; background: transparent; color: var(--ink); transition: border-color .2s; }
+  input[type=number] { width: 130px; }
+  input:focus, textarea:focus, select:focus { outline: none; border-bottom-color: var(--accent); }
+  textarea { resize: vertical; min-height: 92px; line-height: 1.5; }
+  select { cursor: pointer; }
+  input[type=checkbox] { accent-color: var(--accent); width: auto; cursor: pointer; }
+  .twin { display: grid; grid-template-columns: 1fr 110px; gap: 26px; }
+  input[type=file] { font-family: var(--mono); font-size: 13px; color: var(--ink-2); padding: 14px 0;
+    border-bottom: 1.5px solid var(--ink); width: 100%; cursor: pointer; }
+  input[type=file]::file-selector-button { font-family: var(--mono); font-size: 12px; letter-spacing: .08em;
+    text-transform: uppercase; background: var(--ink); color: var(--paper); border: none; padding: 9px 16px; margin-right: 16px; cursor: pointer; }
+  input[type=file]::file-selector-button:hover { background: var(--accent); }
+
+  .ing-switch { display: flex; gap: 0; margin: 4px 0 10px; }
+  .ing-switch button { background: none; border: none; cursor: pointer; font-family: var(--mono); font-size: 11.5px;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding: 8px 18px 10px 0; margin-right: 22px;
+    border-bottom: 2px solid transparent; }
+  .ing-switch button.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .ing-mode { display: none; }
+  .ing-mode.active { display: block; animation: rise .4s cubic-bezier(.2,.7,.2,1) both; }
+  .ing-hint { font-family: var(--body); font-size: 15px; color: var(--muted); margin-top: 8px; font-style: italic; }
+  .ing-stat { font-family: var(--mono); font-size: 13.5px; color: var(--ink-2); margin-top: 4px; }
+  .ing-stat b { color: var(--accent); font-weight: 700; }
+
+  button.run { margin-top: 28px; background: var(--ink); color: var(--paper); border: none; padding: 15px 38px;
+    font-family: var(--mono); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; cursor: pointer;
+    position: relative; overflow: hidden; transition: color .3s; }
+  button.run::before { content: ""; position: absolute; inset: 0; background: var(--accent); transform: translateY(101%);
+    transition: transform .32s cubic-bezier(.7,0,.2,1); z-index: 0; }
+  button.run:hover::before { transform: translateY(0); }
+  button.run span { position: relative; z-index: 1; }
+  button.run:disabled { opacity: .4; cursor: default; }
+
+  .result { position: relative; z-index: 1; margin-top: 48px; display: none; }
+  .result.show { display: block; animation: rise .5s cubic-bezier(.2,.7,.2,1) both; }
+  .result-rule { display: flex; align-items: center; gap: 16px; font-family: var(--mono); font-size: 11px;
+    letter-spacing: .22em; text-transform: uppercase; color: var(--muted); margin-bottom: 24px; }
+  .result-rule::before { content: ""; width: 30px; height: 1px; background: var(--accent); }
+  .result-rule::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  .stamp { display: inline-block; font-family: var(--serif); font-weight: 700; font-size: 30px; letter-spacing: .04em;
+    padding: 10px 26px; transform: rotate(-3deg); border: 3px double var(--accent); color: var(--accent); }
+  .stamp.no { color: var(--ink-2); border-color: var(--ink-2); border-style: solid; }
+
+  .meta { font-family: var(--mono); font-size: 12px; color: var(--ink-2); margin-top: 22px; display: flex; gap: 22px;
+    flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 14px; }
+  .meta b { color: var(--accent); font-weight: 700; }
+  .reason { font-family: var(--body); font-size: 18px; line-height: 1.55; color: var(--ink); max-width: 620px;
+    border-left: 2px solid var(--accent); padding: 2px 0 2px 18px; margin-top: 24px; }
+  .reason .rlabel { display: block; font-family: var(--mono); font-size: 10.5px; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+
+  table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+  tr { border-bottom: 1px solid var(--line); }
+  th { text-align: left; font-family: var(--mono); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--muted); padding: 0 0 12px; font-weight: 500; }
+  td { padding: 15px 18px 15px 0; vertical-align: top; }
+  td.field { font-family: var(--mono); font-size: 12.5px; color: var(--accent); width: 175px; padding-top: 18px; }
+  td.val { font-family: var(--body); font-size: 18px; }
+  td.val .src { display: block; font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 5px; }
+
+  .narrative { font-size: 19px; line-height: 1.62; max-width: 660px; color: var(--ink); }
+  .narrative::first-letter { font-family: var(--serif); font-weight: 700; font-size: 4.1em; line-height: .78;
+    float: left; margin: 6px 12px 0 0; color: var(--accent); }
+  .cites { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; }
+  .cites .lbl { font-family: var(--mono); font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-right: 6px; }
+  .cites code { font-family: var(--mono); font-size: 12px; color: var(--ink); border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
+
+  .hit { border-bottom: 1px solid var(--line); padding: 18px 0; }
+  .hit .h { font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-bottom: 7px; display: flex; gap: 14px; }
+  .hit .h b { color: var(--accent); font-weight: 700; }
+  .hit .t { font-size: 16px; color: var(--ink-2); line-height: 1.5; }
+
+  .export { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); display: flex; align-items: center; gap: 4px; }
+  .export .lbl { font-family: var(--mono); font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-right: 16px; }
+  .export button { background: none; border: none; cursor: pointer; font-family: var(--mono); font-size: 12.5px;
+    color: var(--ink); padding: 6px 14px; letter-spacing: .05em; position: relative; }
+  .export button::after { content: ""; position: absolute; left: 14px; right: 14px; bottom: 3px; height: 1.5px;
+    background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .25s; }
+  .export button:hover::after { transform: scaleX(1); }
+  .export .sep { color: var(--line); }
+
+  .err { font-family: var(--mono); font-size: 13px; color: var(--accent); margin-top: 20px; }
+  .spin { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-top: 20px; }
+  .spin::before { content: "▰▰▱ "; color: var(--accent); animation: blink 1s steps(3) infinite; }
+
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  @keyframes blink { 50% { opacity: .35; } }
+  .stagger > * { animation: rise .6s cubic-bezier(.2,.7,.2,1) both; }
+  .stagger > *:nth-child(1){animation-delay:.04s} .stagger > *:nth-child(2){animation-delay:.12s}
+  .stagger > *:nth-child(3){animation-delay:.2s}
+  .prisma-flow { margin: 10px 0 30px; max-width: 480px; }
+  .pbox { border: 1.5px solid var(--ink); padding: 15px 20px; background: var(--paper-2); }
+  .pbox .pn { font-family: var(--mono); font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 6px; }
+  .pbox .pv { font-family: var(--serif); font-size: 26px; font-weight: 700; }
+  .pbox .pl { font-family: var(--body); font-size: 16px; color: var(--ink-2); }
+  .parrow { text-align: center; color: var(--muted); font-size: 22px; padding: 5px 0; }
+  .pexcl { border-left: 2px solid var(--accent); margin: 4px 0 4px 56px; padding: 7px 0 7px 14px; font-family: var(--mono); font-size: 12px; color: var(--ink-2); }
+  .stamp-mini { font-family: var(--mono); font-size: 10px; letter-spacing: .06em; padding: 1px 7px; border: 1px solid var(--accent); color: var(--accent); margin-right: 6px; }
+  .stamp-mini.no { color: var(--ink-2); border-color: var(--ink-2); }
+  .pexcl-list { margin: 7px 0 0; padding-left: 16px; font-family: var(--mono); font-size: 11px; color: var(--ink-2); line-height: 1.5; }
+  .pexcl-list li { margin-bottom: 3px; }
+  .rep-sec { margin-top: 30px; }
+  .rep-h { font-family: var(--mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid var(--ink); padding-bottom: 8px; margin-bottom: 16px; }
+  .rep-table th { font-size: 9.5px; padding-right: 10px; }
+  .rep-table td { padding: 8px 10px 8px 0; vertical-align: top; }
+  .rep-syn { margin-bottom: 24px; }
+  .rep-rq { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--accent); margin-bottom: 7px; letter-spacing: .08em; }
+  .toc-grp { flex-basis: 100%; font-family: var(--mono); font-size: 10px; letter-spacing: .26em;
+    text-transform: uppercase; color: var(--muted); padding: 16px 0 2px; margin-top: 8px; border-top: 1px solid var(--line); }
+  .toc-grp:first-child { border-top: none; margin-top: 0; padding-top: 4px; }
+  .toc-grp .gx { color: var(--accent); margin-right: 9px; }
+
+  .step-note { display: inline-block; font-family: var(--mono); font-size: 10px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--ink-2); border: 1px solid var(--line); border-left: 2px solid var(--accent);
+    padding: 6px 13px; margin-top: 14px; }
+
+  .csel { position: relative; max-width: 680px; }
+  .csel-btn { display: flex; justify-content: space-between; align-items: center; gap: 14px; width: 100%;
+    padding: 13px 4px; border: none; border-bottom: 1.5px solid var(--ink); background: transparent; color: var(--ink);
+    font-family: var(--body); font-size: 18px; cursor: pointer; text-align: left; transition: border-color .2s; }
+  .csel-btn:hover, .csel.open .csel-btn { border-bottom-color: var(--accent); }
+  .csel-btn .cv { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .csel-btn .cc { font-family: var(--mono); font-size: 12px; color: var(--accent); transition: transform .25s; }
+  .csel.open .csel-btn .cc { transform: rotate(180deg); }
+  .csel-list { position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 60; background: var(--paper-2);
+    border: 1.5px solid var(--ink); box-shadow: 7px 9px 0 rgba(27,23,20,.13); max-height: 320px; overflow-y: auto; display: none; }
+  .csel.open .csel-list { display: block; animation: rise .2s cubic-bezier(.2,.7,.2,1) both; }
+  .csel-opt { padding: 12px 16px; font-family: var(--body); font-size: 16px; color: var(--ink-2); cursor: pointer;
+    border-bottom: 1px solid var(--line); transition: padding-left .18s, background .18s, color .18s; }
+  .csel-opt:last-child { border-bottom: none; }
+  .csel-opt:hover { background: var(--paper); color: var(--ink); padding-left: 22px; }
+  .csel-opt[aria-selected="true"] { color: var(--accent); }
+  .csel-opt[aria-selected="true"]::before { content: "▪ "; color: var(--accent); }
+
+  .wzbar { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap;
+    border: 1px solid var(--line); border-left: 3px solid var(--accent); background: var(--paper-2); padding: 11px 18px; margin-top: 18px; }
+  .wz-corpus { display: flex; align-items: center; gap: 9px; font-family: var(--mono); font-size: 12px; color: var(--ink-2); }
+  .wz-corpus .wz-k { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+  .wz-corpus b { color: var(--accent); font-size: 14px; font-weight: 700; }
+  .wz-edit { background: none; border: none; border-bottom: 1px solid var(--accent); color: var(--ink); cursor: pointer;
+    font-family: var(--mono); font-size: 11px; padding: 0 0 1px; margin-left: 4px; }
+  .wz-edit:hover { color: var(--accent); }
+  .wz-msg { font-family: var(--mono); font-size: 11.5px; color: var(--accent); letter-spacing: .03em; min-height: 14px; }
+  .toc button.locked { opacity: .42; cursor: not-allowed; }
+  .toc button.locked .num { color: var(--muted); }
+  .toc button.locked .nm::after { content: " · locked"; font-family: var(--mono); font-size: 10px;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .toc button.wzdone .nm::after { content: " ✓"; color: var(--accent); font-size: 15px; }
+  .wz-advance { margin-top: 28px; padding-top: 22px; border-top: 1px dashed var(--line); }
+
+  .cite { font-family: var(--mono); font-size: 12px; color: var(--ink); background: none; border: none;
+    border-bottom: 1px solid var(--accent); padding: 0 1px 1px; cursor: pointer; transition: color .15s, background .15s; }
+  .cite:hover { color: var(--accent); background: var(--paper-2); }
+  .refpop { position: absolute; z-index: 9500; width: 340px; max-width: calc(100vw - 32px); background: var(--paper);
+    border: 1.5px solid var(--ink); border-left: 3px solid var(--accent); box-shadow: 8px 10px 0 rgba(27,23,20,.14);
+    padding: 16px 18px; display: none; }
+  .refpop .rp-id { font-family: var(--mono); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .refpop .rp-cite { font-family: var(--body); font-size: 15.5px; line-height: 1.5; color: var(--ink); }
+  .refpop .rp-cite i { font-style: italic; }
+  .refpop .rp-doi { margin-top: 10px; font-family: var(--mono); font-size: 11.5px; }
+  .refpop .rp-doi a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--line); }
+  .refpop .rp-doi a:hover { border-bottom-color: var(--accent); }
+
+  .picker { border: 1px solid var(--line); background: var(--paper-2); margin-top: 4px; }
+  .picker-bar { display: flex; align-items: center; gap: 14px; padding: 9px 12px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  .picker-count { font-family: var(--mono); font-size: 11px; letter-spacing: .05em; color: var(--accent); font-weight: 700; }
+  .picker-acts { font-family: var(--mono); font-size: 11px; }
+  .picker-acts button { background: none; border: none; color: var(--ink); cursor: pointer; font-family: var(--mono); font-size: 11px; padding: 2px 3px; border-bottom: 1px solid transparent; }
+  .picker-acts button:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .picker-acts .sep { color: var(--line); margin: 0 3px; }
+  #pick-filter { flex: 1; min-width: 120px; border: none; border-bottom: 1px solid var(--line); background: transparent; font-family: var(--mono); font-size: 12px; padding: 4px 2px; width: auto; }
+  #pick-filter:focus { outline: none; border-bottom-color: var(--accent); }
+  .picker-list { max-height: 300px; overflow-y: auto; padding: 2px 0; }
+  .picker-empty { padding: 14px 12px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .pick-item { display: flex; gap: 10px; align-items: baseline; padding: 7px 12px; cursor: pointer; }
+  .pick-item:hover { background: var(--paper); }
+  .pick-item input { width: auto; margin: 0; flex-shrink: 0; }
+  .pick-item .pid { font-family: var(--mono); font-size: 11px; color: var(--accent); flex-shrink: 0; }
+  .pick-item .pt { font-family: var(--body); font-size: 14.5px; color: var(--ink-2); line-height: 1.35; }
+
+  .reveal { display: none; } .reveal.on { display: block; }
+  .pr-list { margin-top: 8px; }
+  .pr-row { border-bottom: 1px solid var(--line); padding: 11px 0; cursor: pointer; }
+  .pr-row:hover { background: var(--paper-2); }
+  .pr-head { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; font-family: var(--body); font-size: 15px; color: var(--ink-2); }
+  .pr-head .pid { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .pr-why { margin: 9px 0 2px; font-family: var(--body); font-size: 14px; color: var(--ink-2); border-left: 2px solid var(--accent); padding-left: 12px; line-height: 1.5; }
+  .ex-src { font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); line-height: 1.65; padding: 6px 0 10px; }
+  .ex-src b { color: var(--accent); }
+  .ex-row { cursor: pointer; }
+  .ex-row:hover td { background: var(--paper-2); }
+
+  @media (max-width: 680px){ .masthead-grid{grid-template-columns:1fr} .colophon{text-align:left;border-left:none;padding-left:0} .twin{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="spine"><span>Retrieval-Augmented Generation · SLR Automation System</span></div>
+
+<div class="sheet stagger">
+  <header class="masthead">
+    <div class="kicker">Systematic Literature Review · Automation System</div>
+    <div class="masthead-grid">
+      <h1 class="title">Retrieval&nbsp;Augmented<br><em>Literature</em>&nbsp;Engine</h1>
+      <div class="colophon" id="colophon"><div><span class="dot">▪</span> loading…</div></div>
+    </div>
+    <div class="model-bar" style="font-family:var(--mono);font-size:11.5px;color:var(--ink-2);margin-top:6px">
+      generation model · <input type="text" id="g-model" placeholder="default (config)" style="font-family:var(--mono);font-size:11.5px;width:260px;padding:2px 6px;vertical-align:middle"> <span style="color:var(--muted)">empty = default; use an OpenRouter slug to change the language model for all steps (no re-indexing needed)</span>
+    </div>
+  </header>
+
+  <nav class="toc">
+    <button class="active" data-tab="ingest"><span class="num">01</span><span class="nm">Indexing</span></button>
+    <button data-tab="prisma"><span class="num">02</span><span class="nm">PRISMA</span></button>
+    <button data-tab="report"><span class="num">03</span><span class="nm">Report</span></button>
+  </nav>
+
+  <div class="wzbar">
+    <div class="wz-corpus"><span class="wz-k">Active corpus</span> <b id="wz-n">-</b> <span id="wz-src"></span> <button class="wz-edit" onclick="goTab('ingest')">change</button></div>
+    <div class="wz-msg" id="wz-msg"></div>
+  </div>
+
+  <!-- 01 INDEXING -->
+  <section class="folio" id="f-ingest">
+    <div class="bignum">01</div>
+    <div class="lede">
+      <svg class="ico" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+      <h2>Corpus indexing</h2>
+      <p>Choose which papers to add to the vector database: pick from the existing corpus or upload your own PDFs. The system chunks, embeds, and indexes the text.</p>
+    </div>
+    <div class="form">
+      <div class="ing-switch">
+        <button class="active" data-mode="pool">From existing corpus</button>
+        <button data-mode="upload">Upload PDF</button>
+        <button data-mode="fetch">Fetch from database</button>
+      </div>
+
+      <div class="ing-mode active" id="m-pool">
+        <label>How many papers to index?</label>
+        <input type="number" id="ing-n" value="20" min="1" max="101">
+        <div class="ing-hint">First N papers from the corpus pool (up to 101 final publications).</div>
+        <button class="run" onclick="runIngestPool()"><span>Index →</span></button>
+      </div>
+
+      <div class="ing-mode" id="m-upload">
+        <label>PDF files</label>
+        <input type="file" id="ing-files" multiple accept=".pdf,application/pdf">
+        <div class="ing-hint">One or more PDFs; text is extracted with PyMuPDF.</div>
+        <button class="run" onclick="runIngestUpload()"><span>Upload and index →</span></button>
+      </div>
+
+      <div class="ing-mode" id="m-fetch">
+        <label>arXiv search query</label>
+        <input type="text" id="fetch-q" placeholder="hybrid retrieval augmented generation">
+        <label>How many results to fetch?</label>
+        <input type="number" id="fetch-n" value="10" min="1" max="500">
+        <label style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; font-family:var(--body); font-size:15px; color:var(--ink); margin-top:14px;"><input type="checkbox" id="fetch-fulltext" checked style="width:auto;"> Download full text (PDF; higher quality but slower). If off, title + abstract only: fast, for large corpora.</label>
+        <button class="run" onclick="runIngestFetch()"><span>Fetch and index →</span></button>
+      </div>
+
+      <div class="result" id="r-ingest"></div>
+      <div class="wz-advance"><button class="run" onclick="wzGo('prisma')"><span>Continue to PRISMA with this corpus →</span></button></div>
+    </div>
+  </section>
+
+  <!-- 02 SCREENING -->
+  <section class="folio hidden" id="f-screen">
+    <div class="bignum">04</div>
+    <div class="lede">
+      <svg class="ico" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <h2>Inclusion decision</h2>
+      <p>The title and abstract are evaluated against the inclusion / exclusion criteria (IC/EC).</p>
+      <div class="step-note">Single-paper screening · batch screening → 02 PRISMA · end-to-end → 03 Report</div>
+    </div>
+    <div class="form">
+      <label>Paper title</label>
+      <input type="text" id="s-title" placeholder="A Hybrid Dense-Sparse Retrieval Framework…">
+      <label>Abstract</label>
+      <textarea id="s-abstract" placeholder="Paper abstract…"></textarea>
+      <label>Inclusion criteria: keywords or sentences</label>
+      <textarea id="s-ic" placeholder="e.g. RAG, dense+sparse retrieval, reranking" style="min-height:88px"></textarea>
+      <label>Exclusion criteria</label>
+      <textarea id="s-ec" placeholder="e.g. survey/review, traditional information retrieval only" style="min-height:88px"></textarea>
+      <button class="run" onclick="runScreen()"><span>Screen →</span></button>
+      <div class="result" id="r-screen"></div>
+    </div>
+  </section>
+
+  <!-- 03 EXTRACTION -->
+  <section class="folio hidden" id="f-extract">
+    <div class="bignum">05</div>
+    <div class="lede">
+      <svg class="ico" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M10 13h4M10 17h4"/></svg>
+      <h2>Structured extraction</h2>
+      <p>Retrieval-relevant chunks are pulled from the selected paper; classification fields are extracted along with evidence.</p>
+      <div class="step-note">Single-paper extraction · for all included publications → 03 Report</div>
+    </div>
+    <div class="form">
+      <label>Corpus record</label>
+      <select id="e-paper"><option>loading…</option></select>
+      <label style="margin-top:12px">Fields to extract <span style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0">· comma-separated (empty = default SLR schema)</span></label>
+      <input type="text" id="e-fields" placeholder="domain, hybrid_type, llm_used, vector_db, embedding_model, frameworks, metrics_used">
+      <button class="run" onclick="runExtract()"><span>Extract →</span></button>
+      <div class="result" id="r-extract"></div>
+    </div>
+  </section>
+
+  <!-- 04 SYNTHESIS -->
+  <section class="folio hidden" id="f-synth">
+    <div class="bignum">06</div>
+    <div class="lede">
+      <svg class="ico" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></svg>
+      <h2>Cross-corpus synthesis</h2>
+      <p>Evidence is gathered from the indexed corpus for a research question; an integrated, cited narrative is produced.</p>
+      <div class="step-note">Single-question synthesis · for all questions → 03 Report</div>
+    </div>
+    <div class="form">
+      <label>Research question</label>
+      <select id="y-rq">
+        <option value="RQ1">RQ1: Application domains and challenges encountered</option>
+        <option value="RQ2">RQ2: Methods, approaches, and tools</option>
+        <option value="RQ3">RQ3: Hybrid methods that improve performance</option>
+        <option value="RQ4">RQ4: Integration and deployment techniques</option>
+      </select>
+      <label>or your own research question</label>
+      <input type="text" id="y-rq-free" placeholder="Free-form question (if entered, used instead of the above)">
+      <button class="run" onclick="runSynth()"><span>Synthesize →</span></button>
+      <div class="result" id="r-synth"></div>
+    </div>
+  </section>
+
+  <!-- 05 RETRIEVAL -->
+  <section class="folio hidden" id="f-retrieve">
+    <div class="bignum">07</div>
+    <div class="lede">
+      <svg class="ico" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></svg>
+      <h2>Raw retrieval · transparency</h2>
+      <p>Extraction and synthesis run this retrieval step in the background before generating an answer. This section shows that step bare: for a query, which chunks are retrieved, with what similarity score, from which paper, without any language-model interpretation. It is for auditing retrieval quality and the evidence the system relies on.</p>
+      <div class="step-note">Raw retrieval audit · no LLM interpretation</div>
+    </div>
+    <div class="form">
+      <div class="twin">
+        <div><label>Query</label><input type="text" id="t-query" placeholder="cross-encoder reranking"></div>
+        <div><label>k</label><input type="text" id="t-k" value="8"></div>
+      </div>
+      <button class="run" onclick="runRetrieve()"><span>Retrieve →</span></button>
+      <div class="result" id="r-retrieve"></div>
+    </div>
+  </section>
+
+  <!-- 06 PRISMA -->
+  <section class="folio hidden" id="f-prisma">
+    <div class="bignum">02</div>
+    <div class="lede">
+      <svg class="ico" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18l-7 8v6l-4 2v-8z"/></svg>
+      <h2>PRISMA flow report</h2>
+      <p>A pool of papers is batch-screened against inclusion/exclusion criteria; a PRISMA 2020 flow (identification → screening → included) and decision rationales are produced.</p>
+    </div>
+    <div class="form">
+      <label>Papers to screen, select the pool (default: all)</label>
+      <div class="picker" id="prisma-picker">
+        <div class="picker-bar">
+          <span class="picker-count" id="pick-count">-</span>
+          <span class="picker-acts"><button type="button" onclick="pickAll(true)">all</button><span class="sep">·</span><button type="button" onclick="pickAll(false)">none</button></span>
+          <input type="text" id="pick-filter" placeholder="search titles…" oninput="pickFilter(this.value)">
+        </div>
+        <div class="picker-list" id="pick-list"><div class="picker-empty">loading corpus…</div></div>
+      </div>
+      <label>Inclusion criteria: keywords or sentences</label>
+      <textarea id="prisma-ic" placeholder="e.g. RAG, dense+sparse retrieval, reranking" style="min-height:88px"></textarea>
+      <label>Exclusion criteria</label>
+      <textarea id="prisma-ec" placeholder="e.g. survey/review, traditional information retrieval only" style="min-height:88px"></textarea>
+      <div class="ing-hint">For each paper, the <b>chunks most relevant to the criteria are retrieved from the vector DB (RAG)</b>, then an include/exclude decision is made; the result is a PRISMA flow diagram.</div>
+      <button class="run" onclick="runPrisma()"><span>Generate PRISMA flow →</span></button>
+      <div class="result" id="r-prisma"></div>
+    </div>
+  </section>
+
+  <!-- 07 REPORT -->
+  <section class="folio hidden" id="f-report">
+    <div class="bignum">03</div>
+    <div class="lede">
+      <svg class="ico" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M9 7h7M9 11h7"/></svg>
+      <h2>Integrated SLR report</h2>
+      <p>The system's final output. It extracts data from the publications included by <b>02 PRISMA</b>, synthesizes the research questions from those publications, and combines everything with the PRISMA flow into a single report. It does not re-screen.</p>
+    </div>
+    <div class="form">
+      <div class="ing-hint" id="rep-included">The report is generated from the publications included in <b>02 PRISMA</b>, no re-screening. Run the PRISMA flow first.</div>
+      <label>Research questions: one question per line</label>
+      <textarea id="report-rqs" style="min-height:104px">What are the main application domains of RAG systems, and what key challenges arise in these domains?
+What methods, approaches, and tools are commonly used to build RAG systems?
+What hybrid methods are used to enhance RAG performance, and how are they applied?
+What integration methods, tools, and techniques are used to deploy RAG systems?</textarea>
+      <div class="ing-hint">The report answers these questions by gathering evidence only from the <b>included</b> publications, the last link of the matryoshka. For a different domain, write your own questions.</div>
+      <label style="margin-top:12px">Fields to extract <span style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0">· comma-separated (empty = default SLR schema)</span></label>
+      <input type="text" id="rep-fields" placeholder="domain, hybrid_type, llm_used, vector_db, embedding_model, frameworks, metrics_used">
+      <div class="ing-hint">Extraction + synthesis; may take 30-90 s depending on the number of included publications.</div>
+      <button class="run" onclick="runReport()"><span>Generate report →</span></button>
+      <div class="result" id="r-report"></div>
+    </div>
+  </section>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+
+// Shared protocol: IC/EC is defined once, shared across Screening · PRISMA · Report
+function syncIC(v){ ["s-ic","prisma-ic","report-ic"].forEach(id=>{const e=$(id); if(e&&e.value!==v)e.value=v;}); localStorage.setItem("slr_ic",v); }
+function syncEC(v){ ["s-ec","prisma-ec","report-ec"].forEach(id=>{const e=$(id); if(e&&e.value!==v)e.value=v;}); localStorage.setItem("slr_ec",v); }
+function bindProtocol(){
+  ["s-ic","prisma-ic","report-ic"].forEach(id=>{const e=$(id); if(e)e.addEventListener("input",()=>syncIC(e.value));});
+  ["s-ec","prisma-ec","report-ec"].forEach(id=>{const e=$(id); if(e)e.addEventListener("input",()=>syncEC(e.value));});
+}
+
+// Theme-matched dropdown (vermilion instead of the browser's blue selection)
+function enhanceSelect(sel){
+  if(!sel) return;
+  if(sel.dataset.enh){ if(sel._csel) sel._csel._sync(); return; }
+  sel.dataset.enh="1";
+  const wrap=document.createElement("div"); wrap.className="csel";
+  sel.parentNode.insertBefore(wrap, sel); wrap.appendChild(sel); sel.style.display="none";
+  const btn=document.createElement("button"); btn.type="button"; btn.className="csel-btn";
+  btn.innerHTML='<span class="cv"></span><span class="cc">▾</span>';
+  const list=document.createElement("div"); list.className="csel-list";
+  wrap.appendChild(btn); wrap.appendChild(list);
+  btn.onclick=(e)=>{ e.stopPropagation(); document.querySelectorAll(".csel.open").forEach(c=>{if(c!==wrap)c.classList.remove("open");}); wrap.classList.toggle("open"); };
+  wrap._render=()=>{ list.innerHTML="";
+    [...sel.options].forEach(o=>{ const it=document.createElement("div"); it.className="csel-opt"; it.textContent=o.textContent;
+      it.setAttribute("aria-selected", o.value===sel.value?"true":"false");
+      it.onclick=()=>{ sel.value=o.value; sel.dispatchEvent(new Event("change")); wrap.classList.remove("open"); wrap._sync(); };
+      list.appendChild(it); }); };
+  wrap._sync=()=>{ const o=sel.options[sel.selectedIndex]; btn.querySelector(".cv").textContent=o?o.textContent:"select..."; wrap._render(); };
+  sel._csel=wrap; wrap._sync();
+}
+document.addEventListener("click",()=>document.querySelectorAll(".csel.open").forEach(c=>c.classList.remove("open")));
+
+// Strict wizard: Indexing → PRISMA → Report advance locked
+const WZ = { indexed:false, screened:false };
+function goTab(tab){
+  document.querySelectorAll(".toc button").forEach(x => x.classList.remove("active"));
+  document.querySelectorAll(".folio").forEach(x => x.classList.add("hidden"));
+  const btn = document.querySelector('.toc button[data-tab="'+tab+'"]');
+  if(btn) btn.classList.add("active");
+  const f = $("f-" + tab);
+  f.classList.remove("hidden");
+  f.querySelector(".lede").style.animation = "rise .5s cubic-bezier(.2,.7,.2,1) both";
+}
+function wzApply(){
+  const pr = document.querySelector('.toc button[data-tab="prisma"]');
+  const rp = document.querySelector('.toc button[data-tab="report"]');
+  const ig = document.querySelector('.toc button[data-tab="ingest"]');
+  if(pr){ pr.classList.toggle("locked", !WZ.indexed); pr.dataset.lockmsg = "Complete 01 Indexing first: the 'Continue to PRISMA with this corpus' button."; pr.classList.toggle("wzdone", WZ.screened); }
+  if(rp){ rp.classList.toggle("locked", !WZ.screened); rp.dataset.lockmsg = "Run the 02 PRISMA screening first."; }
+  if(ig) ig.classList.toggle("wzdone", WZ.indexed);
+}
+function wzFlash(msg){ const m=$("wz-msg"); if(!m) return; m.textContent = "⤬ " + (msg || "locked"); clearTimeout(window._wzt); window._wzt = setTimeout(()=>m.textContent="", 3400); }
+function wzGo(target){
+  if(target==="prisma"){ WZ.indexed=true; wzApply(); goTab("prisma"); }
+  else if(target==="report"){ WZ.screened=true; wzApply(); goTab("report"); }
+}
+document.querySelectorAll(".toc button").forEach(t => t.onclick = () => {
+  if(t.classList.contains("locked")){ wzFlash(t.dataset.lockmsg); return; }
+  goTab(t.dataset.tab);
+});
+
+document.querySelectorAll(".ing-switch button").forEach(b => b.onclick = () => {
+  document.querySelectorAll(".ing-switch button").forEach(x => x.classList.remove("active"));
+  document.querySelectorAll(".ing-mode").forEach(x => x.classList.remove("active"));
+  b.classList.add("active");
+  $("m-" + b.dataset.mode).classList.add("active");
+});
+
+async function refreshHealth() {
+  try {
+    const h = await (await fetch("/api/health")).json();
+    $("colophon").innerHTML =
+      `<div><b>${h.n_papers}</b> papers <span class="dot">·</span> <b>${h.n_chunks}</b> chunks</div>` +
+      `<div>${esc(h.corpus_source || "-")}</div>` +
+      `<div>generation &nbsp;<b>${h.llm_model.split("/").pop()}</b></div>` +
+      `<div>embedding &nbsp;<b>${h.embedding_model.split("/").pop()}</b></div>` +
+      `<div><span class="dot">▪</span> ${h.status === "ok" ? "ready" : "loading"}</div>`;
+    if (h.pool_size) $("ing-n").max = h.pool_size;
+    window.CORPUS_N = h.n_papers || 0;
+    if ($("wz-n")) $("wz-n").textContent = (h.n_papers || 0) + " papers";
+    if ($("wz-src")) $("wz-src").textContent = h.corpus_source ? "· " + h.corpus_source : "";
+    const _ic = localStorage.getItem("slr_ic") || h.default_ic || "";
+    const _ec = localStorage.getItem("slr_ec") || h.default_ec || "";
+    if (_ic) syncIC(_ic);
+    if (_ec) syncEC(_ec);
+  } catch (e) { $("colophon").innerHTML = '<div>server unreachable</div>'; }
+}
+async function refreshPapers() {
+  try {
+    const papers = await (await fetch("/api/papers")).json();
+    const sel = $("e-paper"); sel.innerHTML = "";
+    papers.forEach(p => {
+      const o = document.createElement("option");
+      o.value = p.paper_id;
+      o.textContent = `${p.paper_id} · ${p.title.slice(0, 72)}${p.title.length > 72 ? "…" : ""}`;
+      sel.appendChild(o);
+    });
+    enhanceSelect(sel);
+    buildPicker(papers);
+  } catch (e) {}
+}
+
+// Screening pool picker (02 PRISMA)
+function buildPicker(papers){
+  const list = $("pick-list"); if(!list) return;
+  list.innerHTML = papers.length
+    ? papers.map(p => `<label class="pick-item"><input type="checkbox" class="pick-cb" value="${esc(p.paper_id)}" checked onchange="pickCount()"><span class="pid">${esc(p.paper_id)}</span><span class="pt">${esc(p.title)}</span></label>`).join("")
+    : '<div class="picker-empty">corpus is empty, index first.</div>';
+  pickCount();
+}
+function pickAll(on){ document.querySelectorAll("#pick-list .pick-item").forEach(it=>{ if(it.style.display!=="none"){ const c=it.querySelector(".pick-cb"); if(c) c.checked=on; } }); pickCount(); }
+function pickFilter(q){ q=(q||"").toLowerCase(); document.querySelectorAll("#pick-list .pick-item").forEach(it=>{ it.style.display = it.textContent.toLowerCase().includes(q) ? "" : "none"; }); }
+function selectedPaperIds(){ return [...document.querySelectorAll("#pick-list .pick-cb")].filter(c=>c.checked).map(c=>c.value); }
+function pickCount(){ const t=document.querySelectorAll("#pick-list .pick-cb").length, s=selectedPaperIds().length; const el=$("pick-count"); if(el) el.textContent = `${s} / ${t} selected`; }
+
+async function init() { wzApply(); enhanceSelect($("y-rq")); bindProtocol(); await refreshHealth(); await refreshPapers(); }
+
+function spin(el, msg){ el.classList.add("show"); el.innerHTML = `<div class="spin">${msg || "generating · real model call"}</div>`; }
+function fail(el,m){ el.classList.add("show"); el.innerHTML = `<div class="err">⤬ ${m}</div>`; }
+function rule(t){ return `<div class="result-rule">${t}</div>`; }
+function meta(r){ return `<div class="meta"><span><b>${r.input_tokens}</b> input tokens</span><span><b>${r.output_tokens}</b> output tokens</span><span><b>${r.latency_s}</b> s</span></div>`; }
+function expo(){ return `<div class="export"><span class="lbl">Archive</span><button onclick="doExport('csv')">CSV</button><span class="sep">/</span><button onclick="doExport('json')">JSON</button><span class="sep">/</span><button onclick="doExport('pdf')">PDF</button></div>`; }
+function statusNote(r){
+  if(r && r.status==="truncated") return `<div class="reason" style="border-left:3px solid #c0392b"><span class="rlabel">Warning</span>Output was cut off at the token limit (truncated), fields may be missing; do not trust an all-empty record.</div>`;
+  if(r && (r.status==="parse_failed"||r.status==="error")) return `<div class="reason" style="border-left:3px solid #c0392b"><span class="rlabel">Warning</span>The model response could not be parsed (${esc(r.status)}), this record is not reliable.</div>`;
+  return "";
+}
+function inventedNote(ids){
+  if(!ids || !ids.length) return "";
+  return `<div class="reason" style="border-left:3px solid #c0392b"><span class="rlabel">⚠ Fabricated citation</span>${ids.map(esc).join(", ")}: a source mentioned in the text but not in the evidence set; cannot be linked to a reference.</div>`;
+}
+
+async function post(url, body){
+  const res = await fetch(url, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body)});
+  if(!res.ok) throw new Error((await res.json().catch(()=>({}))).detail || res.status);
+  return res.json();
+}
+
+async function runIngestPool(){
+  const el = $("r-ingest"); spin(el, "indexing · chunking + embedding");
+  try {
+    const n = parseInt($("ing-n").value) || 20;
+    ingestDone(el, await post("/api/ingest/pool", {n}));
+  } catch(e){ fail(el, e.message); }
+}
+async function runIngestUpload(){
+  const el = $("r-ingest");
+  const files = $("ing-files").files;
+  if(!files.length){ fail(el, "Select a PDF first."); return; }
+  spin(el, `processing ${files.length} PDF(s) · text extraction + indexing`);
+  try {
+    const fd = new FormData();
+    for(const f of files) fd.append("files", f);
+    const res = await fetch("/api/ingest/upload", {method:"POST", body:fd});
+    if(!res.ok) throw new Error((await res.json().catch(()=>({}))).detail || res.status);
+    ingestDone(el, await res.json());
+  } catch(e){ fail(el, e.message); }
+}
+async function ingestDone(el, r){
+  WZ.indexed = true; WZ.screened = false; wzApply();
+  el.innerHTML = rule("Indexing complete") +
+    `<div class="ing-stat"><b>${r.n_papers}</b> papers &nbsp;·&nbsp; <b>${r.n_chunks}</b> chunks &nbsp;·&nbsp; <b>${r.seconds}</b> s &nbsp;·&nbsp; ${r.ms_per_chunk} ms/chunk</div>` +
+    `<div class="reason"><span class="rlabel">Active corpus</span>${esc(r.corpus_source)}. All tabs now operate on this corpus. Next step: <b>02 PRISMA</b> (button below).</div>`;
+  await refreshHealth(); await refreshPapers();
+}
+
+async function runScreen(){
+  const el = $("r-screen"); spin(el);
+  try {
+    const r = await post("/api/screen", {title:$("s-title").value, abstract:$("s-abstract").value, ic:$("s-ic").value, ec:$("s-ec").value});
+    const inc = r.decision === "include";
+    el.innerHTML = rule("Decision") + `<div class="stamp ${inc?"":"no"}">${inc?"INCLUDE":"EXCLUDE"}</div>` +
+      `<div class="reason"><span class="rlabel">Rationale</span>${esc(r.reason || "-")}</div>` + meta(r) + expo();
+  } catch(e){ fail(el, e.message); }
+}
+async function runExtract(){
+  const el = $("r-extract"); spin(el);
+  try {
+    const customFields = ($("e-fields").value||"").split(",").map(s=>s.trim()).filter(Boolean);
+    const r = await post("/api/extract", {paper_id:$("e-paper").value, fields:customFields, model:curModel()});
+    let rows = "";
+    for(const [k,v] of Object.entries(r.fields)){
+      const s = r.sources[k];
+      const g = (r.grounding||{})[k];
+      const gmark = (v==null) ? "" : (g===false
+        ? `<span class="src" style="color:#c0392b">⚠ not verified in source text</span>`
+        : (g===true ? `<span class="src" style="color:#2e7d32">✓ source verified</span>` : ""));
+      rows += `<tr><td class="field">${k}</td><td class="val">${v==null?"-":esc(String(Array.isArray(v)?v.join(", "):v))}` +
+        (s?`<span class="src">source · "${esc(String(s).slice(0,130))}"</span>`:"") + gmark + `</td></tr>`;
+    }
+    el.innerHTML = rule(`${r.paper_id} · ${r.n_chunks_retrieved} chunks retrieved`) + statusNote(r) +
+      `<table><tr><th>Field</th><th>Value &amp; source</th></tr>${rows}</table>` + meta(r) + expo();
+  } catch(e){ fail(el, e.message); }
+}
+async function runSynth(){
+  const el = $("r-synth"); spin(el);
+  try {
+    const free = $("y-rq-free").value.trim();
+    const r = await post("/api/synthesize", {research_question: free || $("y-rq").value, model:curModel()});
+    window.REFS = Object.assign(window.REFS || {}, r.references || {});
+    const cites = r.cited_papers.map(citeChip).join("");
+    el.innerHTML = rule(`synthesized from ${r.n_cited} papers`) +
+      (r.truncated?statusNote({status:"truncated"}):"") +
+      `<div class="narrative">${linkifyCites(esc(r.narrative))}</div>` +
+      inventedNote(r.invented_citations) +
+      `<div class="cites"><span class="lbl">Evidence</span>${cites}</div>` + meta(r) + expo();
+  } catch(e){ fail(el, e.message); }
+}
+async function runRetrieve(){
+  const el = $("r-retrieve"); el.classList.add("show");
+  el.innerHTML = '<div class="spin">retrieving</div>';
+  try {
+    const k = parseInt($("t-k").value)||8;
+    const res = await fetch(`/api/retrieve?query=${encodeURIComponent($("t-query").value)}&k=${k}`);
+    if(!res.ok) throw new Error((await res.json().catch(()=>({}))).detail || res.status);
+    const r = await res.json();
+    const hits = r.hits.map(h=>`<div class="hit"><div class="h"><b>${h.paper_id}</b><span>${h.chunk_id}</span><span>score ${h.score}</span></div><div class="t">${esc(h.text)}…</div></div>`).join("");
+    el.innerHTML = rule(`${r.hits.length} chunks · no LLM call`) + hits;
+  } catch(e){ fail(el, e.message); }
+}
+
+async function doExport(fmt){
+  try {
+    const res = await fetch("/api/export", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({fmt})});
+    if(!res.ok) throw new Error((await res.json().catch(()=>({}))).detail || res.status);
+    const blob = await res.blob();
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = (res.headers.get("Content-Disposition")||"").split("filename=")[1] || `result.${fmt}`;
+    a.click(); URL.revokeObjectURL(a.href);
+  } catch(e){ alert("Export error: " + e.message); }
+}
+
+async function runIngestFetch(){
+  const el = $("r-ingest");
+  const full = $("fetch-fulltext").checked;
+  spin(el, full ? "downloading full text from arXiv · may take a while" : "fetching abstracts from arXiv");
+  try {
+    const q = $("fetch-q").value; const max = parseInt($("fetch-n").value)||10;
+    ingestDone(el, await post("/api/fetch", {query:q, max, full_text:full}));
+  } catch(e){ fail(el, e.message); }
+}
+
+async function runPrisma(){
+  const el = $("r-prisma");
+  const ids = selectedPaperIds();
+  if(!ids.length){ fail(el, "Select at least one paper to screen (the pool is empty)."); return; }
+  spin(el, `screening ${ids.length} papers · title/abstract + full text`);
+  try {
+    const r = await post("/api/prisma", {paper_ids: ids, ic:$("prisma-ic").value, ec:$("prisma-ec").value, model:curModel()});
+    const elig = r.excl_eligibility || [];
+    const flow = `<div class="prisma-flow">
+      <div class="pbox"><span class="pn">Identification</span><span class="pv">${r.identification}</span> <span class="pl">records identified</span></div>
+      <div class="parrow">↓</div>
+      <div class="pbox"><span class="pn">Screening: title/abstract</span><span class="pv">${r.identification}</span> <span class="pl">records screened</span></div>
+      <div class="pexcl">${r.screening_excluded} records excluded (title/abstract level)</div>
+      <div class="parrow">↓</div>
+      <div class="pbox"><span class="pn">Eligibility: full text</span><span class="pv">${r.eligibility_assessed}</span> <span class="pl">full texts assessed</span></div>
+      <div class="pexcl">${r.eligibility_excluded} records excluded (full text)</div>
+      <div class="parrow">↓</div>
+      <div class="pbox"><span class="pn">Included</span><span class="pv">${r.included}</span> <span class="pl">studies included</span></div>
+    </div>`;
+    const tag = (t, c) => `<span class="stamp-mini ${c}">${t}</span>`;
+    const prow = (x, label, cls) =>
+      `<div class="pr-row" onclick="this.querySelector('.pr-why').classList.toggle('on')">`
+      + `<div class="pr-head"><span class="pid">${x.paper_id}</span> ${tag(label,cls)} <span>${esc(x.title.slice(0,80))}</span></div>`
+      + `<div class="pr-why reveal">${esc(x.reason || "-")}</div></div>`;
+    let rows = "";
+    (r.included_list || []).forEach(x => rows += prow(x, "INCLUDE", ""));
+    elig.forEach(x => rows += prow(x, "EXCLUDE · full text", "no"));
+    (r.excl_screening || []).forEach(x => rows += prow(x, "EXCLUDE · screening", "no"));
+    WZ.screened = true; window.INCLUDED_N = r.included; wzApply();
+    if($("rep-included")) $("rep-included").innerHTML = `<b>02 PRISMA → ${r.included} included publications</b> ready for the report. Extraction + synthesis are produced from these publications; no re-screening.`;
+    el.innerHTML = rule("PRISMA 2020 flow: four phases") + flow
+      + `<div class="ing-hint" style="margin-top:18px">Decision list: <b>click a row to see the rationale.</b></div>`
+      + `<div class="pr-list">${rows}</div>` + meta(r) + expo()
+      + `<div class="wz-advance"><button class="run" onclick="goTab('report')"><span>Continue to Report → (${r.included} included publications)</span></button></div>`;
+  } catch(e){ fail(el, e.message); }
+}
+
+async function runReport(){
+  const el = $("r-report");
+  const inc = window.INCLUDED_N || 0;
+  if(!inc){ goTab('prisma'); wzFlash("Run 02 PRISMA first: the report is generated from what it includes."); return; }
+  if(inc > 30 && !confirm(`PRISMA included ${inc} publications.\nThe report produces extraction + RQ synthesis for each, ~${Math.ceil(inc/8)} min and token cost.\nContinue?`)) return;
+  spin(el, `generating report · extraction + synthesis from ${inc} included publications (may take a while)`);
+  try {
+    const rqs = $("report-rqs").value.split("\n").map(s=>s.trim()).filter(Boolean);
+    const customFields = ($("rep-fields").value||"").split(",").map(s=>s.trim()).filter(Boolean);
+    const r = await post("/api/report", {rqs, fields:customFields, model:curModel()});
+    window.REFS = Object.assign(window.REFS || {}, r.references || {});
+    const pr = r.prisma;
+    const prismaBox = `<div class="rep-sec"><div class="rep-h">1 · PRISMA flow (from 02)</div><div class="ing-stat">Identification <b>${pr.identification}</b> → title/abstract excluded <b>${pr.screening_excluded}</b> → full text <b>${pr.eligibility_assessed}</b> (excluded <b>${pr.eligibility_excluded}</b>) → <b>${pr.included}</b> included</div></div>`;
+    const fields = (r.extractions[0] && r.extractions[0].fields) ? Object.keys(r.extractions[0].fields) : ["domain","hybrid_type","llm_used","vector_db","embedding_model","frameworks","metrics_used"];
+    const head = "<tr><th>Publication</th>" + fields.map(f=>`<th>${f}</th>`).join("") + "</tr>";
+    const body = r.extractions.map(x=>{
+      const stWarn = (x.status && x.status!=="ok") ? ` <span class="src" style="color:#c0392b">⚠ ${esc(x.status)}</span>` : "";
+      const main = `<tr class="ex-row" onclick="this.nextElementSibling.querySelector('.reveal').classList.toggle('on')"><td class="field">${citeChip(x.paper_id)}${stWarn}</td>` + fields.map(f=>{const v=x.fields[f]; const ung=(x.grounding||{})[f]===false; return `<td class="val" style="font-size:12.5px${ung?';color:#c0392b':''}"${ung?' title="not verified in source text"':''}>${v==null?"-":esc(String(Array.isArray(v)?v.join(", "):v).slice(0,38))}${ung?' ⚠':''}</td>`;}).join("") + "</tr>";
+      const srcs = x.sources || {};
+      const srcRows = fields.filter(f=>srcs[f]).map(f=>`<div><b>${f}:</b> “${esc(String(srcs[f]).slice(0,180))}”</div>`).join("") || "no source record.";
+      const rev = `<tr class="ex-rev"><td colspan="${fields.length+1}"><div class="reveal ex-src">${srcRows}</div></td></tr>`;
+      return main + rev;
+    }).join("");
+    const exBox = `<div class="rep-sec"><div class="rep-h">2 · Extracted data: ${r.extractions.length} included publications <span style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0">· click a row → source chunks</span></div><div style="overflow-x:auto"><table class="rep-table">${head}${body}</table></div></div>`;
+    const synBox = `<div class="rep-sec"><div class="rep-h">3 · Synthesis: research questions</div>` + r.syntheses.map(s=>`<div class="rep-syn"><div class="rep-rq">${s.rq}</div><div class="narrative" style="font-size:16px">${linkifyCites(esc(s.narrative))}</div>${inventedNote(s.invented_citations)}<div class="cites"><span class="lbl">Evidence</span>${s.cited.map(citeChip).join("")}</div></div>`).join("") + `</div>`;
+    const csLine = r.checksum ? `<div class="ing-stat" style="margin-top:10px">output integrity · SHA-256 <code title="${esc(r.checksum)}">${esc(r.checksum.slice(0,24))}…</code></div>` : "";
+    el.innerHTML = rule("Integrated SLR report: final output") + prismaBox + exBox + synBox + meta(r) + csLine + expo();
+  } catch(e){ fail(el, e.message); }
+}
+
+function curModel(){ const v=$("g-model"); return (v && v.value.trim()) || ""; }
+function esc(s){ return String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+// Clickable, traceable citations (real SLR reference)
+window.REFS = {};
+function citeChip(id){ return `<button class="cite" data-id="${esc(id)}">${esc(id)}</button>`; }
+function linkifyCites(escaped){
+  return escaped.replace(/\[([A-Z]\d{3}(?:\s*,\s*[A-Z]\d{3})*)\]/g, (m, ids) =>
+    "[" + ids.split(/\s*,\s*/).map(citeChip).join(", ") + "]");
+}
+function showRef(btn){
+  const id = btn.dataset.id, r = (window.REFS || {})[id];
+  let pop = $("refpop");
+  if(!pop){ pop = document.createElement("div"); pop.id = "refpop"; pop.className = "refpop"; document.body.appendChild(pop); }
+  if(!r){ pop.innerHTML = `<div class="rp-id">${esc(id)}</div><div class="rp-cite">Reference not found in this corpus.</div>`; }
+  else {
+    const a = r.author ? esc(r.author) + " " : "";
+    const y = r.year ? "(" + esc(r.year) + "). " : "";
+    const t = r.title ? "<i>" + esc(r.title) + "</i>." : "";
+    const link = r.url ? `<a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.doi || r.url)}</a>` : (r.doi ? esc(r.doi) : "");
+    pop.innerHTML = `<div class="rp-id">${esc(id)}</div><div class="rp-cite">${a}${y}${t}</div>` + (link ? `<div class="rp-doi">${link}</div>` : "");
+  }
+  const rect = btn.getBoundingClientRect(), cw = document.documentElement.clientWidth;
+  let left = window.scrollX + rect.left;
+  if(left + 340 > window.scrollX + cw - 16) left = window.scrollX + cw - 356;
+  pop.style.display = "block";
+  pop.style.top = (window.scrollY + rect.bottom + 8) + "px";
+  pop.style.left = Math.max(8, left) + "px";
+}
+document.addEventListener("click", (e) => {
+  const b = e.target.closest(".cite");
+  if(b){ showRef(b); return; }
+  const pop = $("refpop");
+  if(pop && !e.target.closest("#refpop")) pop.style.display = "none";
+});
+init();
+</script>
+</body>
+</html>
