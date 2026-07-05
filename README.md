@@ -54,13 +54,26 @@ configurable per request, so you supply and choose your own.
 
 ```bash
 bash scripts/setup.sh              # create .venv, install dependencies, prepare .env
-.venv/bin/python build_index.py    # index the bundled sample corpus (7 open-access papers)
+.venv/bin/python build_index.py    # index the bundled sample corpus (32 open-access papers)
 bash scripts/run.sh                # http://127.0.0.1:8000
 ```
 
-A fresh clone ships with a small, license-clean **sample corpus** (`data/sample/`, 7 CC BY 4.0
-arXiv papers) so the full flow runs immediately. Add `OPENROUTER_API_KEY=...` to `.env` to enable
-the LLM stages. On Windows: `scripts\setup.ps1` then `scripts\run.ps1`.
+A fresh clone ships with a small, license-clean **sample corpus** (`data/sample/`, 32 redistributable
+CC BY / CC BY-SA arXiv papers) so the full flow runs immediately. Add `OPENROUTER_API_KEY=...` to
+`.env` to enable the LLM stages. On Windows: `scripts\setup.ps1` then `scripts\run.ps1`.
+
+**End-to-end demonstration.** To exercise the whole pipeline in one command, run:
+
+```bash
+.venv/bin/python demonstration.py   # index -> screen -> extract -> synthesize -> SHA-256 check
+```
+
+It runs all four stages over the bundled sample corpus and prints a per-stage throughput funnel
+(papers indexed, included/excluded at screening, extracted, and citations resolved at synthesis),
+then writes the full result to `data/sample/example_output.json`. That output file is committed, so
+you can inspect the expected shape without running anything. The screening, extraction, and synthesis
+stages call an LLM, so they need `OPENROUTER_API_KEY` set; indexing and retrieval run offline. This is
+a throughput and behaviour demonstration that the software runs end to end, not an accuracy benchmark.
 
 ## How it works
 
