@@ -5,17 +5,17 @@ type: software
 authors:
   - family-names: "Sarı"
     given-names: "Ekrem"
-    orcid: "https://orcid.org/[TO FILL]"
-    affiliation: "[TO FILL: Department, Başkent University, Ankara, Türkiye]"
+    orcid: "https://orcid.org/0009-0007-5854-0367"
+    affiliation: "Department of Management Information Systems, Başkent University, Ankara, Türkiye"
   - family-names: "Uysal"
     given-names: "Murat Paşa"
-    orcid: "https://orcid.org/[TO FILL]"
-    affiliation: "[TO FILL: Department, Başkent University, Ankara, Türkiye]"
+    orcid: "https://orcid.org/0000-0002-8349-9403"
+    affiliation: "Department of Management Information Systems, Başkent University, Ankara, Türkiye"
 repository-code: "https://github.com/sariekr/slr-rag-automation"
 license: MIT
 version: "v1.0.0"
-date-released: "[TO FILL: YYYY-MM-DD]"
-doi: "[TO FILL: 10.5281/zenodo.XXXXXXX]"
+date-released: "2026-07-05"
+doi: "[TO FILL after the Zenodo release mints it: 10.5281/zenodo.XXXXXXX]"
 keywords:
   - systematic literature review
   - retrieval-augmented generation
