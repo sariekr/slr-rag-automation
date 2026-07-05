@@ -15,7 +15,7 @@ repository-code: "https://github.com/sariekr/slr-rag-automation"
 license: MIT
 version: "v1.0.0"
 date-released: "2026-07-05"
-doi: "[TO FILL after the Zenodo release mints it: 10.5281/zenodo.XXXXXXX]"
+doi: "10.5281/zenodo.21205680"
 keywords:
   - systematic literature review
   - retrieval-augmented generation
