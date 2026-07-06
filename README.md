@@ -17,7 +17,7 @@
   <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-green">
   <img alt="tests" src="https://img.shields.io/badge/tests-73%20passing-brightgreen">
   <img alt="FastAPI + ChromaDB" src="https://img.shields.io/badge/stack-FastAPI%20%2B%20ChromaDB-informational">
-  <a href="https://doi.org/10.5281/zenodo.21205679"><img src="https://zenodo.org/badge/1250595395.svg" alt="DOI"></a>
+  <a href="https://doi.org/10.5281/zenodo.21205679"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.21205679.svg" alt="DOI"></a>
 </p>
 
 <p align="center">
